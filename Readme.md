@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Анастасия Алексеенко](https://up.htmlacademy.ru/ecmascript/12/user/132653).
-* Наставник: `Неизвестно`.
+* Наставник: [Вячеслав Зайцев](https://htmlacademy.ru/profile/id428459).
 
 ---
 
