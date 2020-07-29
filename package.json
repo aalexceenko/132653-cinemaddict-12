@@ -1,5 +1,5 @@
 {
-  "name": "Cinemaddict",
+  "name": "cinemaddict",
   "version": "1.0.0",
   "private": true,
   "description": "Личный проект «Киноман» от HTML Academy",
@@ -13,5 +13,8 @@
   },
   "engines": {
     "node": "10"
+  },
+  "dependencies": {
+    "stylelint-config-htmlacademy": "^0.1.4"
   }
 }
