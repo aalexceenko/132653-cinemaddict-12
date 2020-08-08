@@ -1,5 +1,7 @@
+import {FILM_COUNT} from "../main.js";
+
 export const createFilmsStatisticTemplate = () => {
   return (
-    `<p>130 291 movies inside</p>`
+    `<p>${FILM_COUNT} movies inside</p>`
   );
 };
