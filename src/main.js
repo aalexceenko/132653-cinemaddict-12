@@ -12,17 +12,12 @@ import {createFilmListTemplate} from "./view/films-list.js";
 import {generateFilm} from "./mock/film.js";
 import {generateFilter} from "./mock/navigation.js";
 
-console.log(generateFilm());
-
 export const FILM_COUNT = 25;
 const FILM_COUNT_EXTRA = 2;
 const FILM_COUNT_PER_STEP = 5;
 
 const films = new Array(FILM_COUNT).fill().map(generateFilm);
-
 const filters = generateFilter(films);
-console.log(films);
-console.log(filters);
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -46,7 +41,7 @@ const filmListContainer = document.querySelector(`.films-list`);
 const filmsListContainer = document.querySelector(`.films-list__container`);
 
 
-for (let i = 1; i < Math.min(films.length, FILM_COUNT_PER_STEP); i++) {
+for (let i = 0; i < Math.min(films.length, FILM_COUNT_PER_STEP); i++) {
   render(filmsListContainer, createFilmElementTemplate(films[i]), `beforeend`);
 }
 
@@ -87,7 +82,7 @@ for (let i = 0; i < filmsListExtraContainers.length; i++) {
 }
 
 const footerStatistisaContainer = document.querySelector(`.footer__statistics`);
-render(footerStatistisaContainer, createFilmsStatisticTemplate(), `beforeend`);
+render(footerStatistisaContainer, createFilmsStatisticTemplate(films), `beforeend`);
 
 const siteFooterElement = document.querySelector(`footer`);
 

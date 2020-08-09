@@ -1,14 +1,18 @@
+import {getUpperCaseLetter} from "../utils.js";
+
 const createFilterItemTemplate = (filter) => {
   const {name, count} = filter;
 
+  const titleName = getUpperCaseLetter(name);
+
   return (
-    `<a href="#${name}" class="main-navigation__item">${name[0].toUpperCase() + name.slice(1)} <span class="main-navigation__item-count">${count}</span></a>`
+    `<a href="#${name}" class="main-navigation__item">${titleName} <span class="main-navigation__item-count">${count}</span></a>`
   );
 };
 
 export const createNavigationTemplate = (filterItems) => {
   const filterItemsTemplate = filterItems
-  .map((filter, index) => createFilterItemTemplate(filter, index === 0))
+  .map((filter) => createFilterItemTemplate(filter))
   .join(``);
 
 

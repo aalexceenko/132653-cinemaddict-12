@@ -1,3 +1,5 @@
+const MINUTES_IN_HOUR = 60;
+
 export const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
@@ -5,20 +7,30 @@ export const getRandomInteger = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-export const getRandom = (a = 1, b = 0) => {
+export const getRandomFloat = (a = 1, b = 0) => {
   const lower = Math.min(a, b);
   const upper = Math.max(a, b);
 
   return (lower + Math.random() * (upper - lower)).toFixed(1);
 };
 
-export const generatePosition = (arr) => {
+
+export const getRandomArrayItem = (arr) => {
+  if (arr.length === 0) {
+    return [` `];
+  }
+
   const randomIndex = getRandomInteger(0, arr.length - 1);
 
   return arr[randomIndex];
 };
 
-export const getRandomInformation = function (info) {
+export const getRandomArrayItems = function (info) {
+
+  if (info.length === 0) {
+    return [` `];
+  }
+
   const restInformation = info.slice();
   const countInformation = getRandomInteger(1, restInformation.length);
   let newArray = [];
@@ -30,8 +42,23 @@ export const getRandomInformation = function (info) {
 };
 
 export const getDuration = (time) => {
-  const hours = Math.floor(time / 60) > 0 ? `${Math.floor(time / 60)}h` : ``;
-  const minutes = time % 60 > 0 ? `${time % 60}m` : ``;
-  return `${hours}   ${minutes}`;
+  const hours = Math.floor(time / MINUTES_IN_HOUR) > 0 ? `${Math.floor(time / MINUTES_IN_HOUR)}h` : ``;
+  const minutes = time % MINUTES_IN_HOUR > 0 ? `${time % MINUTES_IN_HOUR}m` : ``;
+  return `${hours} ${minutes}`;
 };
 
+export const generateDate = (start, end) => {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+};
+
+export const getUpperCaseLetter = (str) => {
+  return str[0].toUpperCase() + str.slice(1);
+};
+
+export const addClassName = (className) => {
+  if (className) {
+    return `film-card__controls-item--active`;
+  }
+
+  return ``;
+};

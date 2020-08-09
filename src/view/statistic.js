@@ -1,7 +1,5 @@
-import {FILM_COUNT} from "../main.js";
-
-export const createFilmsStatisticTemplate = () => {
+export const createFilmsStatisticTemplate = (films) => {
   return (
-    `<p>${FILM_COUNT} movies inside</p>`
+    `<p>${films.length} movies inside</p>`
   );
 };

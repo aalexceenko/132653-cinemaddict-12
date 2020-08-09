@@ -1,8 +1,7 @@
 import {EMOJIS} from "../const.js";
-import {getDuration} from "../utils.js";
+import {getDuration, addClassName} from "../utils.js";
 
 const createGenresTemplate = (genres) => {
-
   return (
     `<td class="film-details__term">${genres.length > 1 ? `Genres` : `Genre`}</td>
     <td class="film-details__cell">
@@ -50,15 +49,6 @@ export const createFilmDetailsTemplate = (film) => {
   const commentsListTemplate = createCommentsListTemplate(comments);
   const emojiList = createEmojiList();
   const genresTemplate = createGenresTemplate(genres);
-
-  const isClassName = (className) => {
-    if (className) {
-      return `film-card__controls-item--active`;
-    }
-
-    return ``;
-  };
-
   const date = `${year.getDate()} ${year.toLocaleString(`en-US`, {month: `long`, year: `numeric`})}`;
   const duration = getDuration(runtime);
 
@@ -126,13 +116,13 @@ export const createFilmDetailsTemplate = (film) => {
 
           <section class="film-details__controls">
             <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
-            <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist ${isClassName(isWatchlist)}">Add to watchlist</label>
+            <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist ${addClassName(isWatchlist)}">Add to watchlist</label>
 
             <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
-            <label for="watched" class="film-details__control-label film-details__control-label--watched ${isClassName(isWatched)}">Already watched</label>
+            <label for="watched" class="film-details__control-label film-details__control-label--watched ${addClassName(isWatched)}">Already watched</label>
 
             <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
-            <label for="favorite" class="film-details__control-label film-details__control-label--favorite ${isClassName(isFavorites)}">Add to favorites</label>
+            <label for="favorite" class="film-details__control-label film-details__control-label--favorite ${addClassName(isFavorites)}">Add to favorites</label>
           </section>
         </div>
 

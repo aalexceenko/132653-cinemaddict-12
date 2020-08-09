@@ -1,7 +1,7 @@
-import {getRandomInteger, getRandom, generatePosition, getRandomInformation} from "../utils.js";
+import {getRandomInteger, getRandomFloat, getRandomArrayItem, getRandomArrayItems, generateDate} from "../utils.js";
 import {EMOJIS} from "../const.js";
 
-const TITLE = [
+const TITLES = [
   `21`,
   `Профессор`,
   `Матильда`,
@@ -9,7 +9,7 @@ const TITLE = [
   `Социальная сеть`,
 ];
 
-const ORIGINAL_TITLE = [
+const ORIGINAL_TITLES = [
   `21`,
   `The Professor`,
   `Matilda`,
@@ -43,21 +43,21 @@ const COUNTRIES = [
   `USSR`
 ];
 
-const AGES = [
+const AGES_RESCTRICTION = [
   `0+`,
   `6+`,
   `12+`,
   `18+`
 ];
 
-const GENRE = [
+const GENRES = [
   `action`,
   `comedy`,
   `romantic`,
   `detective`
 ];
 
-const DESCRIPTION = [
+const DESCRIPTION_STRINGS = [
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
   `Cras aliquet varius magna, non porta ligula feugiat eget.`,
   `Fusce tristique felis at fermentum pharetra.`,
@@ -71,12 +71,9 @@ const DESCRIPTION = [
   `In rutrum ac purus sit amet tempus.`
 ];
 
-function generateDate(start, end) {
-  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-}
 
 const generateComment = () => {
-  const text = DESCRIPTION[getRandomInteger(0, DESCRIPTION.length - 1)];
+  const text = DESCRIPTION_STRINGS[getRandomInteger(0, DESCRIPTION_STRINGS.length - 1)];
   const emoji = EMOJIS[getRandomInteger(0, EMOJIS.length - 1)];
 
   return {
@@ -92,19 +89,19 @@ export const generateFilm = () => {
   const comments = new Array(getRandomInteger(0, 5)).fill().map(generateComment);
 
   return {
-    title: generatePosition(TITLE),
-    origanalTitle: generatePosition(ORIGINAL_TITLE),
-    poster: generatePosition(POSTER),
-    rating: getRandom(0, 10),
-    writer: getRandomInformation(NAMES),
-    director: generatePosition(NAMES),
-    actors: getRandomInformation(NAMES),
-    country: generatePosition(COUNTRIES),
-    age: generatePosition(AGES),
+    title: getRandomArrayItem(TITLES),
+    origanalTitle: getRandomArrayItem(ORIGINAL_TITLES),
+    poster: getRandomArrayItem(POSTER),
+    rating: getRandomFloat(0, 10),
+    writer: getRandomArrayItems(NAMES),
+    director: getRandomArrayItem(NAMES),
+    actors: getRandomArrayItems(NAMES),
+    country: getRandomArrayItem(COUNTRIES),
+    age: getRandomArrayItem(AGES_RESCTRICTION),
     year: generateDate(new Date(1900, 0, 1), new Date(2020, 0, 1)),
     runtime: getRandomInteger(5, 180),
-    genres: getRandomInformation(GENRE),
-    description: getRandomInformation(DESCRIPTION),
+    genres: getRandomArrayItems(GENRES),
+    description: getRandomArrayItems(DESCRIPTION_STRINGS),
     comments,
     isWatchlist: Boolean(getRandomInteger(0, 1)),
     isWatched: Boolean(getRandomInteger(0, 1)),

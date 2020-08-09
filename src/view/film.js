@@ -1,31 +1,11 @@
-import {getDuration} from "../utils.js";
+import {getDuration, addClassName} from "../utils.js";
 
-
-const checkLenghtText = (arr) => {
-  let newArrayLength = arr.join().length;
-
-  if (newArrayLength >= 140) {
-    arr = arr.join(`  `).slice(0, 138);
-    arr += `...`;
-  }
-
-  return arr;
-};
 
 export const createFilmElementTemplate = (film) => {
 
   const {title, poster, rating, year, runtime, genres, description, comments, isWatchlist, isWatched, isFavorites} = film;
-  const textDescription = checkLenghtText(description);
   const duration = getDuration(runtime);
-
-  const isClassName = (className) => {
-    if (className) {
-      return `film-card__controls-item--active`;
-    }
-
-    return ``;
-  };
-
+  const textDescription = description.join(` `).length > 140 ? `${description.join(` `).substring(0, 139)}…` : description;
 
   return (
     `<article class="film-card">
@@ -40,9 +20,9 @@ export const createFilmElementTemplate = (film) => {
       <p class="film-card__description">${textDescription}</p>
       <a class="film-card__comments">${comments.length} comments</a>
       <form class="film-card__controls">
-        <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${isClassName(isWatchlist)}">Add to watchlist</button>
-        <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${isClassName(isWatched)}">Mark as watched</button>
-        <button class="film-card__controls-item button film-card__controls-item--favorite ${isClassName(isFavorites)}">Mark as favorite</button>
+        <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${addClassName(isWatchlist)}">Add to watchlist</button>
+        <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${addClassName(isWatched)}">Mark as watched</button>
+        <button class="film-card__controls-item button film-card__controls-item--favorite ${addClassName(isFavorites)}">Mark as favorite</button>
       </form>
     </article>`
   );
