@@ -1,4 +1,4 @@
-import {EMOJIS} from "../const.js";
+import {EMOJIS, CLASS_ITEM_ACTIVE} from "../const.js";
 import {getDuration, addClassName, createElement} from "../utils.js";
 
 const createGenresTemplate = (genres) => {
@@ -51,6 +51,8 @@ const createFilmDetailsTemplate = (film) => {
   const genresTemplate = createGenresTemplate(genres);
   const date = `${year.getDate()} ${year.toLocaleString(`en-US`, {month: `long`, year: `numeric`})}`;
   const duration = getDuration(runtime);
+  const writers = writer ? writer.join(`, `) : `N/A`;
+  const actorsName = actors ? actors.join(`, `) : `N/A`;
 
   return (
     `<section class="film-details">
@@ -69,8 +71,8 @@ const createFilmDetailsTemplate = (film) => {
             <div class="film-details__info">
               <div class="film-details__info-head">
                 <div class="film-details__title-wrap">
-                  <h3 class="film-details__title">${title}</h3>
-                  <p class="film-details__title-original">Original: ${origanalTitle}</p>
+                  <h3 class="film-details__title">${title || `N/A`}</h3>
+                  <p class="film-details__title-original">Original: ${origanalTitle || `N/A`}</p>
                 </div>
 
                 <div class="film-details__rating">
@@ -81,15 +83,15 @@ const createFilmDetailsTemplate = (film) => {
               <table class="film-details__table">
                 <tr class="film-details__row">
                   <td class="film-details__term">Director</td>
-                  <td class="film-details__cell">${director}</td>
+                  <td class="film-details__cell">${director || `N/A`}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Writers</td>
-                  <td class="film-details__cell">${writer.join(`, `)}</td>
+                  <td class="film-details__cell">${writers}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Actors</td>
-                  <td class="film-details__cell">${actors.join(`, `)}</td>
+                  <td class="film-details__cell">${actorsName}</td>
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Release Date</td>
@@ -101,28 +103,28 @@ const createFilmDetailsTemplate = (film) => {
                 </tr>
                 <tr class="film-details__row">
                   <td class="film-details__term">Country</td>
-                  <td class="film-details__cell">${country}</td>
+                  <td class="film-details__cell">${country || `N/A`}</td>
                 </tr>
                 <tr class="film-details__row">
-                  ${genresTemplate}
+                  ${genresTemplate || `N/A`}
                 </tr>
               </table>
 
               <p class="film-details__film-description">
-                ${description}
+                ${description || `N/A`}
               </p>
             </div>
           </div>
 
           <section class="film-details__controls">
             <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
-            <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist ${addClassName(isWatchlist)}">Add to watchlist</label>
+            <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist ${addClassName(CLASS_ITEM_ACTIVE, isWatchlist)}">Add to watchlist</label>
 
             <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
-            <label for="watched" class="film-details__control-label film-details__control-label--watched ${addClassName(isWatched)}">Already watched</label>
+            <label for="watched" class="film-details__control-label film-details__control-label--watched ${addClassName(CLASS_ITEM_ACTIVE, isWatched)}">Already watched</label>
 
             <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
-            <label for="favorite" class="film-details__control-label film-details__control-label--favorite ${addClassName(isFavorites)}">Add to favorites</label>
+            <label for="favorite" class="film-details__control-label film-details__control-label--favorite ${addClassName(CLASS_ITEM_ACTIVE, isFavorites)}">Add to favorites</label>
           </section>
         </div>
 
