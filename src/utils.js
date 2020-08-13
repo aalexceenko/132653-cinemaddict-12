@@ -1,4 +1,32 @@
 const MINUTES_IN_HOUR = 60;
+const SECONDS_IN_MINUTE = 60;
+
+export const RenderPosition = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
+};
+
+export const render = (container, element, place) => {
+  switch (place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+  }
+};
+
+export const renderTemplate = (container, template, place) => {
+  container.insertAdjacentHTML(place, template);
+};
+
+export const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
 
 export const getRandomInteger = (a = 0, b = 1) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -17,7 +45,7 @@ export const getRandomFloat = (a = 1, b = 0) => {
 
 export const getRandomArrayItem = (arr) => {
   if (arr.length === 0) {
-    return [` `];
+    return undefined;
   }
 
   const randomIndex = getRandomInteger(0, arr.length - 1);
@@ -28,7 +56,7 @@ export const getRandomArrayItem = (arr) => {
 export const getRandomArrayItems = function (info) {
 
   if (info.length === 0) {
-    return [` `];
+    return undefined;
   }
 
   const restInformation = info.slice();
@@ -43,7 +71,7 @@ export const getRandomArrayItems = function (info) {
 
 export const getDuration = (time) => {
   const hours = Math.floor(time / MINUTES_IN_HOUR) > 0 ? `${Math.floor(time / MINUTES_IN_HOUR)}h` : ``;
-  const minutes = time % MINUTES_IN_HOUR > 0 ? `${time % MINUTES_IN_HOUR}m` : ``;
+  const minutes = time % MINUTES_IN_HOUR > 0 ? `${time % SECONDS_IN_MINUTE}m` : ``;
   return `${hours} ${minutes}`;
 };
 
@@ -55,9 +83,9 @@ export const getUpperCaseLetter = (str) => {
   return str[0].toUpperCase() + str.slice(1);
 };
 
-export const addClassName = (className) => {
-  if (className) {
-    return `film-card__controls-item--active`;
+export const addClassName = (classNames, state) => {
+  if (state) {
+    return classNames;
   }
 
   return ``;
