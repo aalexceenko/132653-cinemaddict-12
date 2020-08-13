@@ -1,7 +1,7 @@
-import {getDuration, addClassName} from "../utils.js";
+import {getDuration, addClassName, createElement} from "../utils.js";
 
 
-export const createFilmElementTemplate = (film) => {
+const createFilmElementTemplate = (film) => {
 
   const {title, poster, rating, year, runtime, genres, description, comments, isWatchlist, isWatched, isFavorites} = film;
   const duration = getDuration(runtime);
@@ -27,3 +27,26 @@ export const createFilmElementTemplate = (film) => {
     </article>`
   );
 };
+
+export default class Film {
+  constructor(film) {
+    this._element = null;
+    this._film = film;
+  }
+
+  getTemplate() {
+    return createFilmElementTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

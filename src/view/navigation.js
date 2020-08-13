@@ -1,4 +1,4 @@
-import {getUpperCaseLetter} from "../utils.js";
+import {getUpperCaseLetter, createElement} from "../utils.js";
 
 const createFilterItemTemplate = (filter) => {
   const {name, count} = filter;
@@ -26,3 +26,27 @@ export const createNavigationTemplate = (filterItems) => {
     </nav>`
   );
 };
+
+export default class Navigation {
+  constructor(filters) {
+    this._element = null;
+    this._filters = filters;
+  }
+
+  getTemplate() {
+    return createNavigationTemplate(this._filters);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
+

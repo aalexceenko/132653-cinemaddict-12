@@ -1,5 +1,5 @@
 import {EMOJIS} from "../const.js";
-import {getDuration, addClassName} from "../utils.js";
+import {getDuration, addClassName, createElement} from "../utils.js";
 
 const createGenresTemplate = (genres) => {
   return (
@@ -42,7 +42,7 @@ const createEmojiList = () => {
   );
 };
 
-export const createFilmDetailsTemplate = (film) => {
+const createFilmDetailsTemplate = (film) => {
 
   const {title, year, origanalTitle, writer, director, age, actors, country, poster, rating, runtime, description, comments, isFavorites, isWatched, isWatchlist, genres} = film;
 
@@ -53,7 +53,7 @@ export const createFilmDetailsTemplate = (film) => {
   const duration = getDuration(runtime);
 
   return (
-    `<section class="film-details visually-hidden">
+    `<section class="film-details">
       <form class="film-details__inner" action="" method="get">
         <div class="form-details__top-container">
           <div class="film-details__close">
@@ -148,3 +148,26 @@ export const createFilmDetailsTemplate = (film) => {
     </section>`
   );
 };
+
+export default class PopUp {
+  constructor(film) {
+    this._element = null;
+    this._film = film;
+  }
+
+  getTemplate() {
+    return createFilmDetailsTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

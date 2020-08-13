@@ -1,3 +1,5 @@
+import {createElement} from "../utils.js";
+
 const getUserName = (count) => {
   if (count === 0) {
     return ``;
@@ -10,7 +12,7 @@ const getUserName = (count) => {
   }
 };
 
-export const createHeaderProfileTemplate = (films) => {
+const createHeaderProfileTemplate = (films) => {
 
   return (
     `<section class="header__profile profile">
@@ -19,4 +21,27 @@ export const createHeaderProfileTemplate = (films) => {
     </section>`
   );
 };
+
+export default class Header {
+  constructor(films) {
+    this._element = null;
+    this._films = films;
+  }
+
+  getTemplate() {
+    return createHeaderProfileTemplate(this._films);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
 
