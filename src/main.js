@@ -49,10 +49,12 @@ const renderFilm = (filmListElement, film) => {
 
   const openPopup = () => {
     filmListElement.appendChild(filmDetailsComponent.getElement());
+    document.addEventListener(`keydown`, onEscKeyDown);
   };
 
   const closePopup = () => {
     filmListElement.removeChild(filmDetailsComponent.getElement());
+    document.removeEventListener(`keydown`, onEscKeyDown);
   };
 
   const onEscKeyDown = (evt) => {
@@ -69,7 +71,7 @@ const renderFilm = (filmListElement, film) => {
   filmComponent.getElement().querySelector(`.film-card__title`).addEventListener(`click`, openPopup);
   filmComponent.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, openPopup);
   filmDetailsComponent.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, closePopup);
-  document.addEventListener(`keydown`, onEscKeyDown);
+
 
   render(filmListElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
 };
