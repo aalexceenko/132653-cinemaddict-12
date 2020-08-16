@@ -6,7 +6,10 @@ const createFilmElementTemplate = (film) => {
 
   const {title, poster, rating, year, runtime, genres, description, comments, isWatchlist, isWatched, isFavorites} = film;
   const duration = getDuration(runtime);
-  const textDescription = description.join(` `).length > 140 ? `${description.join(` `).substring(0, 139)}…` : description;
+  let descriptionText = description ? description.join(` `) : `N/A`;
+  if (descriptionText.length > 140) {
+    descriptionText = descriptionText.slice(0, 139) + `…`;
+  }
 
   return (
     `<article class="film-card">
@@ -18,7 +21,7 @@ const createFilmElementTemplate = (film) => {
         <span class="film-card__genre">${genres[0] || `N/A`}</span>
       </p>
       <img src="./images/posters/${poster}" alt="" class="film-card__poster">
-      <p class="film-card__description">${textDescription}</p>
+      <p class="film-card__description">${descriptionText}</p>
       <a class="film-card__comments">${comments.length} comments</a>
       <form class="film-card__controls">
         <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${addClassName(CLASS_ITEM_ACTIVE, isWatchlist)}">Add to watchlist</button>
