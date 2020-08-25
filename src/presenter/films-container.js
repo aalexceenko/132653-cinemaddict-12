@@ -24,9 +24,9 @@ export default class MovieList {
 
   }
 
-  init(containerFilms) {
+  init(films) {
 
-    this._containerFilms = containerFilms.slice();
+    this._films = films.slice();
 
     render(this._filmsContainer, this._filmsContainerComponent, RenderPosition.BEFOREEND);
     render(this._filmsContainerComponent, this._filmListComponent, RenderPosition.BEFOREEND);
@@ -69,7 +69,7 @@ export default class MovieList {
 
   _renderFilms(from, to) {
 
-    this._containerFilms
+    this._films
       .slice(from, to)
       .forEach((containerFilm) => this._renderFilm(containerFilm));
 
@@ -84,7 +84,7 @@ export default class MovieList {
     this._renderFilms(this._renderedFilmCount, this._renderedFilmCount + FILM_COUNT_PER_STEP);
     this._renderedFilmCount += FILM_COUNT_PER_STEP;
 
-    if (this._renderedFilmCount >= this._containerFilms.length) {
+    if (this._renderedFilmCount >= this._films.length) {
       remove(this._showMoreButtonComponent);
     }
   }
@@ -98,16 +98,16 @@ export default class MovieList {
 
   _renderFilmList() {
 
-    this._renderFilms(0, Math.min(this._containerFilms.length, FILM_COUNT_PER_STEP));
+    this._renderFilms(0, Math.min(this._films.length, FILM_COUNT_PER_STEP));
 
-    if (this._containerFilms.length > FILM_COUNT_PER_STEP) {
+    if (this._films.length > FILM_COUNT_PER_STEP) {
       this._renderShowMoreButton();
     }
   }
 
   _renderFilmContainer() {
 
-    if (this._containerFilms.length === 0) {
+    if (this._films.length === 0) {
       this._renderNoFilms();
       return;
     }
