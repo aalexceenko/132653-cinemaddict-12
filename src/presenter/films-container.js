@@ -46,11 +46,9 @@ export default class MovieList {
 
     const onEscKeyDown = (evt) => {
       if (evt.key === `Escape` || evt.key === `Esc`) {
-        if (document.querySelector(`.film-details`)) {
-          evt.preventDefault();
-          closePopup();
-          document.removeEventListener(`keydown`, onEscKeyDown);
-        }
+        evt.preventDefault();
+        closePopup();
+        document.removeEventListener(`keydown`, onEscKeyDown);
       }
     };
 
