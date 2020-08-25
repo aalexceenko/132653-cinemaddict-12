@@ -1,8 +1,5 @@
 import FilmView from "../view/film.js";
 import ShowMoreButtonView from "../view/show-more-button.js";
-// import FilmListExtraTopView from "./view/films-top.js";
-// import FilmListExtraCommentView from "./view/films-comment.js";
-
 import PopUpView from "../view/film-pop-up.js";
 import FilmsContainerView from "../view/films-container.js";
 import FilmsListView from "../view/films-list.js";
@@ -11,7 +8,7 @@ import {render, RenderPosition, remove} from "../utils/render.js";
 
 const FILM_COUNT_PER_STEP = 5;
 
-export default class Container {
+export default class MovieList {
   constructor(filmsContainer) {
     this._filmsContainer = filmsContainer;
 
@@ -23,6 +20,9 @@ export default class Container {
 
   init(containerFilms) {
     this._containerFilms = containerFilms.slice();
+
+    render(this._filmsContainer, this._filmsContainerComponent, RenderPosition.BEFOREEND);
+    render(this._filmsContainerComponent, this._filmListComponent, RenderPosition.BEFOREEND);
 
     this._renderFilmContainer();
   }
@@ -79,15 +79,14 @@ export default class Container {
 
     let renderedFilmCount = FILM_COUNT_PER_STEP;
 
-    render(this._filmsContainerComponent, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
-
-    const filmsListContainer = document.querySelector(`.films-list__container`);
+    render(this._filmListComponent, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
 
     this._showMoreButtonComponent.setClickHandler(() => {
 
+
       this._containerFilms
         .slice(renderedFilmCount, renderedFilmCount + FILM_COUNT_PER_STEP)
-        .forEach((film) => this._renderFilm(filmsListContainer, film));
+        .forEach((film) => this._renderFilm(film));
 
       renderedFilmCount += FILM_COUNT_PER_STEP;
 
