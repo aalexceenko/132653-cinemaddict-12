@@ -7,7 +7,7 @@ import {generateFilter} from "./mock/navigation.js";
 import {render, RenderPosition} from "./utils/render.js";
 import MovieListPresenter from "./presenter/films-container.js";
 
-const FILM_COUNT = 15;
+const FILM_COUNT = 12;
 
 const films = new Array(FILM_COUNT).fill().map(generateFilm);
 const filters = generateFilter(films);
