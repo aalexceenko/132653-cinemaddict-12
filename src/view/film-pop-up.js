@@ -1,5 +1,7 @@
 import {EMOJIS, CLASS_ITEM_ACTIVE} from "../const.js";
-import {getDuration, addClassName, createElement} from "../utils.js";
+import {getDuration} from "../utils/film.js";
+import {addClassName} from "../utils/common.js";
+import AbstractView from "./abstract.js";
 
 const createGenresTemplate = (genres) => {
   return (
@@ -151,25 +153,28 @@ const createFilmDetailsTemplate = (film) => {
   );
 };
 
-export default class PopUp {
+export default class PopUp extends AbstractView {
   constructor(film) {
-    this._element = null;
+    super();
+
     this._film = film;
+    this._closePopUpClickHandler = this._closePopUpClickHandler.bind(this);
+
   }
 
   getTemplate() {
     return createFilmDetailsTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _closePopUpClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.click();
   }
 
-  removeElement() {
-    this._element = null;
+  setClosePopUpClickHandler(callback) {
+    this._callback.click = callback;
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._closePopUpClickHandler);
+
   }
+
 }

@@ -1,4 +1,5 @@
-import {getUpperCaseLetter, createElement} from "../utils.js";
+import {getUpperCaseLetter} from "../utils/common.js";
+import AbstractView from "./abstract.js";
 
 const createFilterItemTemplate = (filter) => {
   const {name, count} = filter;
@@ -27,9 +28,9 @@ export const createNavigationTemplate = (filterItems) => {
   );
 };
 
-export default class Navigation {
+export default class Navigation extends AbstractView {
   constructor(filters) {
-    this._element = null;
+    super();
     this._filters = filters;
   }
 
@@ -37,16 +38,5 @@ export default class Navigation {
     return createNavigationTemplate(this._filters);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
-  }
 }
 
