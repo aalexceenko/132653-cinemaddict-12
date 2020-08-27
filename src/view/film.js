@@ -1,5 +1,7 @@
-import {getDuration, addClassName, createElement} from "../utils.js";
+import {getDuration} from "../utils/film.js";
+import {addClassName} from "../utils/common.js";
 import {CLASS_ITEM_ACTIVE} from "../const.js";
+import AbstractView from "./abstract.js";
 
 
 const createFilmElementTemplate = (film) => {
@@ -32,25 +34,33 @@ const createFilmElementTemplate = (film) => {
   );
 };
 
-export default class Film {
+export default class Film extends AbstractView {
   constructor(film) {
-    this._element = null;
+    super();
+
     this._film = film;
+    this._openPopUpClickHandler = this._openPopUpClickHandler.bind(this);
+
   }
 
   getTemplate() {
     return createFilmElementTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _openPopUpClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.click();
   }
 
-  removeElement() {
-    this._element = null;
+  setOpenPopUpClickkHandler(callback) {
+    this._callback.click = callback;
+
+    this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, this._openPopUpClickHandler);
+    this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, this._openPopUpClickHandler);
+
+    this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, this._openPopUpClickHandler);
+
+
   }
+
 }

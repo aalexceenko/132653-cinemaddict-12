@@ -1,4 +1,5 @@
-import {getRandomInteger, getRandomFloat, getRandomArrayItem, getRandomArrayItems, generateDate} from "../utils.js";
+import {getRandomInteger, getRandomFloat, getRandomArrayItem, getRandomArrayItems} from "../utils/common.js";
+import {generateDate} from "../utils/film.js";
 import {EMOJIS} from "../const.js";
 
 const TITLES = [
