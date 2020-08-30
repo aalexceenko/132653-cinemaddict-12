@@ -31,6 +31,7 @@ export default class MovieList {
     render(this._filmsContainerComponent, this._filmListComponent, RenderPosition.BEFOREEND);
     render(this._filmListComponent, this._filmListContainerComponent, RenderPosition.BEFOREEND);
 
+    // console.log(this._films);
     this._renderFilmContainer();
   }
 
@@ -101,7 +102,7 @@ export default class MovieList {
     this._filmListContainerComponent.getElement().innerHTML = ``;
 
     this._renderFilms(0, Math.min(this._films.length, FILM_COUNT_PER_STEP));
-
+    // console.log(this._films);
     if (this._films.length > FILM_COUNT_PER_STEP) {
       this._renderShowMoreButton();
     }

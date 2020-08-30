@@ -9,7 +9,7 @@ import MovieListPresenter from "./presenter/films-container.js";
 import {SortType} from "./const.js";
 import {sortFilmDown, sortFilmRating} from "./utils/film.js";
 
-const FILM_COUNT = 12;
+const FILM_COUNT = 6;
 
 let films = new Array(FILM_COUNT).fill().map(generateFilm);
 let sourceFilms = films.slice();
@@ -55,6 +55,13 @@ const sortTypeChangeHandler = (evt) => {
   }
 
   evt.preventDefault();
+
+
+  const sortElements = document.querySelectorAll(`.sort__button`);
+  Array.from(sortElements).forEach((sortElement) => {
+    sortElement.classList.remove(`sort__button--active`);
+  });
+  evt.target.classList.add(`sort__button--active`);
 
   let sortType = evt.target.dataset.sortType;
   // let currentSortType = SortType.DEFAULT;
