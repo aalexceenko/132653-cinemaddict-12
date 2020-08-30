@@ -38,6 +38,7 @@ export default class MovieList {
 
   _renderFilm(film) {
 
+
     const filmComponent = new FilmView(film);
     const filmDetailsComponent = new PopUpView(film);
 
