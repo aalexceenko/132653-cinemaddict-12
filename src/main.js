@@ -13,7 +13,6 @@ const FILM_COUNT = 12;
 
 let films = new Array(FILM_COUNT).fill().map(generateFilm);
 let sourceFilms = films.slice();
-let currentSortType = SortType.DEFAULT;
 const filters = generateFilter(films);
 
 
@@ -27,6 +26,10 @@ render(siteMainElement, new NavigationView(filters), RenderPosition.BEFOREEND);
 render(siteMainElement, new SortView(), RenderPosition.BEFOREEND);
 
 // const sort = new SortView().getElement();
+const filmContainerPresenter = new MovieListPresenter(siteMainElement);
+// console.log(films);
+
+filmContainerPresenter.init(films);
 
 const sortFilms = (sortType) => {
 
@@ -41,7 +44,7 @@ const sortFilms = (sortType) => {
       films = sourceFilms.slice();
   }
 
-  currentSortType = sortType;
+  // currentSortType = sortType;
 };
 
 const sortTypeChangeHandler = (evt) => {
@@ -54,8 +57,16 @@ const sortTypeChangeHandler = (evt) => {
   evt.preventDefault();
 
   let sortType = evt.target.dataset.sortType;
+  // let currentSortType = SortType.DEFAULT;
+
 
   sortFilms(sortType);
+  // console.log(films);
+
+  // const filmContainerPresenter = new MovieListPresenter(siteMainElement);
+  // console.log(films);
+
+  filmContainerPresenter.init(films);
 
 
 };
@@ -64,9 +75,10 @@ const sortTypeChangeHandler = (evt) => {
 document.querySelector(`.sort`).addEventListener(`click`, sortTypeChangeHandler);
 
 
-const filmContainerPresenter = new MovieListPresenter(siteMainElement);
+// const filmContainerPresenter = new MovieListPresenter(siteMainElement);
+// console.log(films);
 
-filmContainerPresenter.init(films);
+// filmContainerPresenter.init(films);
 
 
 const footerStatistisaContainer = document.querySelector(`.footer__statistics`);

@@ -27,7 +27,6 @@ export default class MovieList {
   init(films) {
 
     this._films = films.slice();
-
     render(this._filmsContainer, this._filmsContainerComponent, RenderPosition.BEFOREEND);
     render(this._filmsContainerComponent, this._filmListComponent, RenderPosition.BEFOREEND);
     render(this._filmListComponent, this._filmListContainerComponent, RenderPosition.BEFOREEND);
@@ -98,6 +97,8 @@ export default class MovieList {
   }
 
   _renderFilmList() {
+
+    this._filmListContainerComponent.getElement().innerHTML = ``;
 
     this._renderFilms(0, Math.min(this._films.length, FILM_COUNT_PER_STEP));
 
