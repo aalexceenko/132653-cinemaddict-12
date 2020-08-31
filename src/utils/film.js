@@ -10,3 +10,22 @@ export const getDuration = (time) => {
 export const generateDate = (start, end) => {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 };
+
+
+export const sortFilmDown = (filmA, filmB) => {
+
+  return filmB.year.getFullYear() - filmA.year.getFullYear();
+};
+
+export const sortFilmRating = (filmA, filmB) => {
+
+  if (filmA.rating > filmB.rating) {
+    return -1;
+  }
+
+  if (filmA.rating < filmB.rating) {
+    return 1;
+  }
+
+  return 0;
+};
