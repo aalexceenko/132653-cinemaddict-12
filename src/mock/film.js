@@ -86,10 +86,13 @@ const generateComment = () => {
 
 };
 
+const generateId = () => `_` + Math.random().toString(36).substr(2, 9);
+
 export const generateFilm = () => {
   const comments = new Array(getRandomInteger(0, 5)).fill().map(generateComment);
 
   return {
+    id: generateId(),
     title: getRandomArrayItem(TITLES),
     origanalTitle: getRandomArrayItem(ORIGINAL_TITLES),
     poster: getRandomArrayItem(POSTER),
