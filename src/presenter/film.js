@@ -27,6 +27,11 @@ export default class Film {
 
   }
 
+  destroy() {
+    remove(this._filmComponent);
+    remove(this._filmDetailsComponent);
+  }
+
   _openPopup() {
     this._filmListContainerComponent.getElement().appendChild(this._filmDetailsComponent.getElement());
     document.addEventListener(`keydown`, this._onEscKeyDown);
