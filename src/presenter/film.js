@@ -33,11 +33,13 @@ export default class Film {
   }
 
   _openPopup() {
+    document.querySelector(`body`).classList.add(`hide-overflow`);
     this._filmListContainerComponent.getElement().appendChild(this._filmDetailsComponent.getElement());
     document.addEventListener(`keydown`, this._onEscKeyDown);
   }
 
   _closePopup() {
+    document.querySelector(`body`).classList.remove(`hide-overflow`);
     remove(this._filmDetailsComponent);
     document.removeEventListener(`keydown`, this._onEscKeyDown);
   }

@@ -127,7 +127,7 @@ export default class MovieList {
 
   _clearFilmList() {
     // this._filmListContainerComponent.getElement().innerHTML = ``;
-
+    console.log(Object.values(this._filmPresenter));
     Object
       .values(this._filmPresenter)
       .forEach((presenter) => presenter.destroy());
