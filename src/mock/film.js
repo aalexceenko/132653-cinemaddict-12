@@ -78,6 +78,7 @@ const generateComment = () => {
   const emoji = EMOJIS[getRandomInteger(0, EMOJIS.length - 1)];
 
   return {
+    id: generateId(),
     emoji,
     date: generateDate(new Date(2020, 0, 1), new Date()),
     author: NAMES[getRandomInteger(1, NAMES.length - 1)],
