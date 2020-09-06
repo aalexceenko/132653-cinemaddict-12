@@ -53,6 +53,9 @@ export const addClassName = (classNames, state) => {
 };
 
 export const updateItem = (items, update) => {
+  // console.log(items.id);
+  // console.log(update.id);
+  // debugger;
   const index = items.findIndex((item) => item.id === update.id);
 
   if (index === -1) {

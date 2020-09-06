@@ -30,6 +30,7 @@ export default class MovieList {
 
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
+
     this._handleFilmChange = this._handleFilmChange.bind(this);
 
   }
@@ -82,6 +83,14 @@ export default class MovieList {
     this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
+  _handleFilmChange(updatedFilm) {
+
+    console.log(this._films);
+    console.log(145);
+    this._films = updateItem(this._films, updatedFilm);
+    this._sourceFilms = updateItem(this._sourceFilms, updatedFilm);
+    this._filmPresenter[updatedFilm.id].init(updatedFilm);
+  }
 
   _renderFilm(film) {
 
@@ -112,10 +121,7 @@ export default class MovieList {
     }
   }
 
-  _handleFilmChange(updatedFilm) {
-    this._films = updateItem(this._films, updatedFilm);
-    this._filmPresenter[updatedFilm.id].init(updatedFilm);
-  }
+
 
   _renderShowMoreButton() {
 

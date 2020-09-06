@@ -2,7 +2,12 @@ import Abstract from "./abstract";
 
 export default class Smart extends Abstract {
 
-  updateData(update) {
+  constructor() {
+    super();
+    this._data = {};
+  }
+
+  updateData(update, justDataUpdating) {
     if (!update) {
       return;
     }
@@ -12,6 +17,10 @@ export default class Smart extends Abstract {
         this._data,
         update
     );
+
+    if (justDataUpdating) {
+      return;
+    }
 
     this.updateElement();
   }
