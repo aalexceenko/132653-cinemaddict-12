@@ -20,7 +20,7 @@ export default class Film {
     this._handleWatchedClick = this._handleWatchedClick.bind(this);
     this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
 
-    this._handleDeleteButtonClick = this._handleDeleteButtonClick.bind(this);
+    // this._handleDeleteButtonClick = this._handleDeleteButtonClick.bind(this);
   }
 
   init(film) {
@@ -43,7 +43,7 @@ export default class Film {
     this._filmDetailsComponent.setWatchedClickHandler(this._handleWatchedClick);
     this._filmDetailsComponent.setFavoriteClickHandler(this._handleFavoriteClick);
 
-    this._filmDetailElement.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
+    // this._filmDetailElement.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
 
     if (prevFilmComponent === null || prevFilmDetailsComponent === null) {
       render(this._filmListContainerComponent, this._filmComponent, RenderPosition.BEFOREEND);
