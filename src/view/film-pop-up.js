@@ -25,7 +25,7 @@ const createCommentsListTemplate = (comments) => {
       <p class="film-details__comment-info">
         <span class="film-details__comment-author">${comment.author}</span>
         <span class="film-details__comment-day">${comment.date.toLocaleString(`en-US`)}</span>
-        <button class="film-details__comment-delete">Delete</button>
+        <button class="film-details__comment-delete data-comment-id ="${comment.id}"">Delete</button>
       </p>
     </div>
   </li>`).join(``)}
@@ -164,6 +164,8 @@ export default class PopUp extends AbstractView {
     this._watchedClickHandler = this._watchedClickHandler.bind(this);
     this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
 
+    this._deleteButtonClickHandler = this._deleteButtonClickHandler.bind(this);
+
   }
 
   getTemplate() {
@@ -209,6 +211,18 @@ export default class PopUp extends AbstractView {
   _favoriteClickHandler(evt) {
     evt.preventDefault();
     this._callback.favoriteClick();
+  }
+
+  setDeleteButtonClickHandler(callback) {
+    this._callback.deleteButtonClick = callback;
+    this.getElement()
+      .querySelectorAll(`.film-details__comment-delete`)
+      .forEach((element) => element.addEventListener(`click`, this._deleteButtonClickHandler));
+  }
+
+  _deleteButtonClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.deleteButtonClick(evt.target.dataset.commentId);
   }
 
 }

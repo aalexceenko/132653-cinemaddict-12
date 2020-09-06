@@ -1,6 +1,6 @@
 import {getRandomInteger, getRandomFloat, getRandomArrayItem, getRandomArrayItems} from "../utils/common.js";
 import {generateDate} from "../utils/film.js";
-import {EMOJIS} from "../const.js";
+import {generateComment} from "./comments.js";
 
 const TITLES = [
   `21`,
@@ -72,20 +72,6 @@ const DESCRIPTION_STRINGS = [
   `In rutrum ac purus sit amet tempus.`
 ];
 
-
-const generateComment = () => {
-  const text = DESCRIPTION_STRINGS[getRandomInteger(0, DESCRIPTION_STRINGS.length - 1)];
-  const emoji = EMOJIS[getRandomInteger(0, EMOJIS.length - 1)];
-
-  return {
-    id: generateId(),
-    emoji,
-    date: generateDate(new Date(2020, 0, 1), new Date()),
-    author: NAMES[getRandomInteger(1, NAMES.length - 1)],
-    text
-  };
-
-};
 
 const generateId = () => `_` + Math.random().toString(36).substr(2, 9);
 

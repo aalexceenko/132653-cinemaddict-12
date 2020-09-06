@@ -53,12 +53,10 @@ export default class Film extends AbstractView {
   _openPopUpClickHandler(evt) {
     evt.preventDefault();
     this._callback.openPopup();
-    console.log(12);
   }
 
   setOpenPopUpClickkHandler(callback) {
     this._callback.openPopup = callback;
-    console.log(122);
     this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, this._openPopUpClickHandler);
     this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, this._openPopUpClickHandler);
 
@@ -70,13 +68,10 @@ export default class Film extends AbstractView {
   _watchListClickHandler(evt) {
     evt.preventDefault();
     this._callback.watchListClick();
-    console.log(11);
   }
 
   setWatchListClickHandler(callback) {
     this._callback.watchListClick = callback;
-    console.log(111);
-    // debugger;
     this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`).addEventListener(`click`, this._watchListClickHandler);
   }
 

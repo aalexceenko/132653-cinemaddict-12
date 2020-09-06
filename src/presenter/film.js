@@ -31,8 +31,6 @@ export default class Film {
     this._filmComponent = new FilmView(film);
     this._filmDetailsComponent = new PopUpView(film);
 
-    // console.log(film);
-
 
     this._filmComponent.setOpenPopUpClickkHandler(this._handleOpenPopUpClick);
     this._filmDetailsComponent.setClosePopUpClickHandler(this._handleClosePopUpClick);
@@ -44,7 +42,8 @@ export default class Film {
     this._filmDetailsComponent.setWatchListClickHandler(this._handleWatchListClick);
     this._filmDetailsComponent.setWatchedClickHandler(this._handleWatchedClick);
     this._filmDetailsComponent.setFavoriteClickHandler(this._handleFavoriteClick);
-    // this._filmDetailElement.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
+
+    this._filmDetailElement.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
 
     if (prevFilmComponent === null || prevFilmDetailsComponent === null) {
       render(this._filmListContainerComponent, this._filmComponent, RenderPosition.BEFOREEND);
@@ -62,8 +61,6 @@ export default class Film {
     remove(prevFilmComponent);
     remove(prevFilmDetailsComponent);
 
-    // render(this._filmListContainerComponent, this._filmComponent, RenderPosition.BEFOREEND);
-
   }
 
   destroy() {
@@ -74,12 +71,6 @@ export default class Film {
   _openPopup() {
     document.querySelector(`body`).classList.add(`hide-overflow`);
     this._filmListContainerComponent.getElement().appendChild(this._filmDetailsComponent.getElement());
-
-    // this._filmDetailsComponent.setWatchListClickHandler(this._handleWatchListClick);
-    // this._filmDetailsComponent.setWatchedClickHandler(this._handleWatchedClick);
-    // this._filmDetailsComponent.setFavoriteClickHandler(this._handleFavoriteClick);
-    // this._filmDetailElement.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
-
 
     document.addEventListener(`keydown`, this._onEscKeyDown);
   }
@@ -100,29 +91,21 @@ export default class Film {
 
   _handleOpenPopUpClick() {
     this._openPopup();
-    console.log(1);
   }
 
   _handleClosePopUpClick() {
-    console.log(2);
     this._closePopup();
-    console.log(3);
-
   }
 
   _handleWatchListClick() {
-    console.log(this._changeData());
 
     this._changeData(
         Object.assign(
             {},
-            console.log(this._film),
             this._film,
 
             {
               isWatchlist: !this._film.isWatchlist
-              // isWatched: !this._film.isWatched,
-              // isFavorites: !this._film.isFavorites
             }
         )
     );
@@ -135,9 +118,7 @@ export default class Film {
             {},
             this._film,
             {
-              // isWatchlist: !this._film.isWatchlist,
               isWatched: !this._film.isWatched
-              // isFavorites: !this._film.isFavorites
             }
         )
     );
@@ -149,22 +130,7 @@ export default class Film {
             {},
             this._film,
             {
-              // isWatchlist: !this._film.isWatchlist,
-              // isWatched: !this._film.isWatched,
               isFavorites: !this._film.isFavorites
-            }
-        )
-    );
-  }
-
-  _handleDeleteButtonClick(commentId) {
-    const newComments = this._film.comments.filter((comment) => comment.id !== parseInt(commentId, 10));
-    this._changeData(
-        Object.assign(
-            {},
-            this._film,
-            {
-              comments: newComments.slice(0)
             }
         )
     );

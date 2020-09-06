@@ -85,8 +85,6 @@ export default class MovieList {
 
   _handleFilmChange(updatedFilm) {
 
-    console.log(this._films);
-    console.log(145);
     this._films = updateItem(this._films, updatedFilm);
     this._sourceFilms = updateItem(this._sourceFilms, updatedFilm);
     this._filmPresenter[updatedFilm.id].init(updatedFilm);
@@ -122,7 +120,6 @@ export default class MovieList {
   }
 
 
-
   _renderShowMoreButton() {
 
     render(this._filmListComponent, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
@@ -140,8 +137,7 @@ export default class MovieList {
   }
 
   _clearFilmList() {
-    // this._filmListContainerComponent.getElement().innerHTML = ``;
-    console.log(Object.values(this._filmPresenter));
+
     Object
       .values(this._filmPresenter)
       .forEach((presenter) => presenter.destroy());
