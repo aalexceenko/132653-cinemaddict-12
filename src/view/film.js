@@ -1,10 +1,11 @@
 import {getDuration} from "../utils/film.js";
 import {addClassName} from "../utils/common.js";
 import {CLASS_ITEM_ACTIVE} from "../const.js";
-import AbstractView from "./abstract.js";
-
+// import AbstractView from "./abstract.js";
+import SmarttView from "./smart.js";
 
 const createFilmElementTemplate = (film) => {
+  // console.log(comments.text.length);
 
   const {title, poster, rating, year, runtime, genres, description, comments, isWatchlist, isWatched, isFavorites} = film;
   const duration = getDuration(runtime);
@@ -34,11 +35,13 @@ const createFilmElementTemplate = (film) => {
   );
 };
 
-export default class Film extends AbstractView {
-  constructor(film) {
+export default class Film extends SmarttView {
+  constructor(film, comments) {
     super();
 
     this._film = film;
+    this._comments = comments;
+
     this._openPopUpClickHandler = this._openPopUpClickHandler.bind(this);
 
     this._watchListClickHandler = this._watchListClickHandler.bind(this);
@@ -47,7 +50,7 @@ export default class Film extends AbstractView {
   }
 
   getTemplate() {
-    return createFilmElementTemplate(this._film);
+    return createFilmElementTemplate(this._film, this._comments);
   }
 
   _openPopUpClickHandler(evt) {
@@ -62,7 +65,6 @@ export default class Film extends AbstractView {
 
     this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, this._openPopUpClickHandler);
 
-
   }
 
   _watchListClickHandler(evt) {
@@ -73,6 +75,7 @@ export default class Film extends AbstractView {
   setWatchListClickHandler(callback) {
     this._callback.watchListClick = callback;
     this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`).addEventListener(`click`, this._watchListClickHandler);
+    console.log(1);
   }
 
   _watchedClickHandler(evt) {

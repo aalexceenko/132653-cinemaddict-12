@@ -1,5 +1,5 @@
 import {EMOJIS} from "../const.js";
-import {getRandomArrayItem, getRandomArrayItems} from "../utils/common.js";
+import {getRandomArrayItem, getRandomArrayItems, generateId} from "../utils/common.js";
 import {generateDate} from "../utils/film.js";
 
 const COMMENTS_TEXT = [
@@ -15,8 +15,6 @@ const NAMES = [
   `Anna Smirnova`,
   `Petr Petrov`
 ];
-
-const generateId = () => `_` + Math.random().toString(36).substr(2, 9);
 
 
 export const generateComment = () => ({

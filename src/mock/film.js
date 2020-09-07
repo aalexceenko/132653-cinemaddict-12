@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomFloat, getRandomArrayItem, getRandomArrayItems} from "../utils/common.js";
+import {getRandomInteger, getRandomFloat, getRandomArrayItem, getRandomArrayItems, generateId} from "../utils/common.js";
 import {generateDate} from "../utils/film.js";
 import {generateComment} from "./comments.js";
 
@@ -72,8 +72,6 @@ const DESCRIPTION_STRINGS = [
   `In rutrum ac purus sit amet tempus.`
 ];
 
-
-const generateId = () => `_` + Math.random().toString(36).substr(2, 9);
 
 export const generateFilm = () => {
   const comments = new Array(getRandomInteger(0, 5)).fill().map(generateComment);

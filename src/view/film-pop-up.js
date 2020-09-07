@@ -1,7 +1,15 @@
 import {EMOJIS, CLASS_ITEM_ACTIVE} from "../const.js";
 import {getDuration} from "../utils/film.js";
 import {addClassName} from "../utils/common.js";
-import AbstractView from "./abstract.js";
+// import AbstractView from "./abstract.js";
+import SmarttView from "./smart.js";
+
+const EmojiType = {
+  SMILE: `smile`,
+  SLEEPING: `sleeping`,
+  PUKE: `puke`,
+  ANGRY: `angry`
+};
 
 const createGenresTemplate = (genres) => {
   return (
@@ -16,9 +24,9 @@ const createCommentsListTemplate = (comments) => {
 
   return (
     `<ul class="film-details__comments-list">
-    ${comments.map((comment) => `<li class="film-details__comment">
+    ${(comments).map((comment) => `<li class="film-details__comment">
     <span class="film-details__comment-emoji">
-      <img src="./images/emoji/${comment.emoji}.png" width="55" height="55" alt="emoji-smile">
+      <img src="./images/emoji/${comment.emoji}.png" width="55" height="55" alt="emoji-${comment.emoji}">
     </span>
     <div>
       <p class="film-details__comment-text">${comment.text}</p>
@@ -36,20 +44,20 @@ const createCommentsListTemplate = (comments) => {
 const createEmojiList = () => {
   return (
     `<div class="film-details__emoji-list">
-    ${EMOJIS.map((emoji) => `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emoji}" value="smile">
-    <label class="film-details__emoji-label" for="emoji-smile">
-      <img src="./images/emoji/${emoji}.png" width="30" height="30" alt="emoji">
+    ${EMOJIS.map((emoji) => `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emoji}" value="${emoji}">
+    <label class="film-details__emoji-label" for="emoji-${emoji}">
+      <img src="./images/emoji/${emoji}.png" width="30" height="30" alt="${emoji}">
     </label>`).join(``)}
         </div>`
   );
 };
 
-const createFilmDetailsTemplate = (film) => {
+const createFilmDetailsTemplate = (film, emoji, message) => {
 
-  const {title, year, origanalTitle, writer, director, age, actors, country, poster, rating, runtime, description, comments, isFavorites, isWatched, isWatchlist, genres} = film;
+  const {title, year, origanalTitle, writer, director, age, actors, country, poster, rating, comments, runtime, description, isFavorites, isWatched, isWatchlist, genres} = film;
 
   const commentsListTemplate = createCommentsListTemplate(comments);
-  const emojiList = createEmojiList();
+  const emojiList = createEmojiList(EMOJIS, createEmojiList, emoji);
   const genresTemplate = createGenresTemplate(genres);
   const date = `${year.getDate()} ${year.toLocaleString(`en-US`, {month: `long`, year: `numeric`})}`;
   const duration = getDuration(runtime);
@@ -140,7 +148,7 @@ const createFilmDetailsTemplate = (film) => {
               <div for="add-emoji" class="film-details__add-emoji-label"></div>
 
               <label class="film-details__comment-label">
-                <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment"></textarea>
+                <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment">${message ? message : ``}</textarea>
               </label>
 
               ${emojiList}
@@ -153,11 +161,14 @@ const createFilmDetailsTemplate = (film) => {
   );
 };
 
-export default class PopUp extends AbstractView {
+export default class PopUp extends SmarttView {
   constructor(film) {
     super();
 
     this._film = film;
+    this._emoji = null;
+    this._message = null;
+
     this._closePopUpClickHandler = this._closePopUpClickHandler.bind(this);
 
     this._watchListClickHandler = this._watchListClickHandler.bind(this);
@@ -165,11 +176,45 @@ export default class PopUp extends AbstractView {
     this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
 
     this._deleteButtonClickHandler = this._deleteButtonClickHandler.bind(this);
+    this._emojiClickHandler = this._emojiClickHandler.bind(this);
+    this._commentInputHandler = this._commentInputHandler.bind(this);
+    this._setInnerHandler();
 
   }
 
+  _setInnerHandler() {
+    this.getElement()
+      .querySelectorAll(`.film-details__emoji-label`)
+      .forEach((element) => element.addEventListener(`click`, this._emojiClickHandler));
+
+    this.getElement()
+      .querySelector(`.film-details__comment-input`)
+      .addEventListener(`input`, this._commentInputHandler);
+  }
+
+  restoreHandlers() {
+    this._setInnerHandler();
+    this.setWatchListClickHandler(this._callback.watchListClick);
+    this.setWatchedClickHandler(this._callback.watchedClick);
+    this.setFavoriteClickHandler(this._callback.favoriteClick);
+    this.setDeleteButtonClickHandler(this._callback.deleteButtonClick);
+    // this.setClickHandler(this._callback.click);
+    this.setEnterKeyDown(this._callback.enterKeyDown);
+
+  }
+
+  _commentInputHandler(evt) {
+    evt.preventDefault();
+    // this.updateData({message: evt.target.value}, true);
+    this._message = evt.target.value;
+  }
+
   getTemplate() {
-    return createFilmDetailsTemplate(this._film);
+    return createFilmDetailsTemplate(this._film, this._emoji, this._message);
+  }
+
+  setEnterKeyDown(callback) {
+    this._callback.enterKeyDown = callback;
   }
 
   _closePopUpClickHandler(evt) {
@@ -215,6 +260,7 @@ export default class PopUp extends AbstractView {
 
   setDeleteButtonClickHandler(callback) {
     this._callback.deleteButtonClick = callback;
+
     this.getElement()
       .querySelectorAll(`.film-details__comment-delete`)
       .forEach((element) => element.addEventListener(`click`, this._deleteButtonClickHandler));
@@ -223,6 +269,37 @@ export default class PopUp extends AbstractView {
   _deleteButtonClickHandler(evt) {
     evt.preventDefault();
     this._callback.deleteButtonClick(evt.target.dataset.commentId);
+    console.log(evt.target.dataset.commentId);
   }
 
+  _emojiClickHandler(evt) {
+    this._updateEmoji(evt.target.dataset.emojiType);
+    this.updateElement();
+  }
+
+  _updateEmoji(emojiType) {
+    switch (emojiType) {
+      case EmojiType.SMILE:
+        this._emoji = EmojiType.SMILE;
+        break;
+      case EmojiType.SLEEPING:
+        this._emoji = EmojiType.SLEEPING;
+        break;
+      case EmojiType.ANGRY:
+        this._emoji = EmojiType.ANGRY;
+        break;
+      case EmojiType.PUKE:
+        this._emoji = EmojiType.PUKE;
+        break;
+    }
+  }
+
+  returnUserMessage() {
+    return this._message ? this._message : false;
+  }
+
+  reset() {
+    this._emoji = null;
+    this._message = null;
+  }
 }
