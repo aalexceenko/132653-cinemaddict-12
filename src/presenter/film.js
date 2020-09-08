@@ -1,6 +1,6 @@
 import FilmView from "../view/film.js";
 import PopUpView from "../view/film-pop-up.js";
-import {generateComment} from "../mock/comments.js";
+// import {generateComment} from "../mock/comments.js";
 import {render, RenderPosition, remove, replace} from "../utils/render.js";
 import {generateId} from "../utils/common.js";
 
@@ -36,10 +36,12 @@ export default class Film {
 
   init(film) {
 
+    this._film = film;
+
     const prevFilmComponent = this._filmComponent;
     const prevFilmDetailsComponent = this._filmDetailsComponent;
 
-    this._comments = generateComment();
+    // this._comments = generateComment();
     // console.log(this._comments);
     // console.log(film);
 
@@ -59,7 +61,6 @@ export default class Film {
     this._filmDetailsComponent.setFavoriteClickHandler(this._handleFavoriteClick);
 
     this._filmDetailsComponent.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
-    // this._filmDetailsComponent.setEmojiClickHandler();
     this._filmDetailsComponent.setEnterKeyDown(this._handleEnterKeyDown);
 
 
@@ -99,8 +100,9 @@ export default class Film {
   }
 
   _closePopup() {
-    document.querySelector(`body`).classList.remove(`hide-overflow`);
     remove(this._filmDetailsComponent);
+
+    document.querySelector(`body`).classList.remove(`hide-overflow`);
     document.removeEventListener(`keydown`, this._onEscKeyDown);
     document.removeEventListener(`keydown`, this._handleEnterKeyDown);
 
@@ -114,6 +116,7 @@ export default class Film {
       this._closePopup();
       document.removeEventListener(`keydown`, this._onEscKeyDown);
       document.removeEventListener(`keydown`, this._handleEnterKeyDown);
+      this._filmDetailsComponent.reset(this._film);
 
     }
   }
@@ -127,9 +130,6 @@ export default class Film {
   }
 
   _handleWatchListClick() {
-    // console.log(this._changeData);
-    // console.log(this._film);
-    // debugger;
 
     this._changeData(
         Object.assign(
@@ -157,7 +157,6 @@ export default class Film {
   }
 
   _handleFavoriteClick() {
-    console.log(this._changeData);
     this._changeData(
         Object.assign(
             {},
@@ -170,7 +169,6 @@ export default class Film {
   }
 
   _handleDeleteButtonClick(commentId) {
-    console.log(this._film);
     const newComments = this._film.comments.filter((comment) => comment.id !== commentId);
     this._changeData(Object.assign({}, this._film, {comments: newComments.slice(0)}));
   }
@@ -178,15 +176,10 @@ export default class Film {
   _handleEnterKeyDown(evt) {
 
     if (evt.key === `Enter`) {
-
-      // let choosenEmoji = this._filmDetailsComponent.getElement().querySelector(`input[type ='radio']:cheked`).value;
       const choosenEmoji = this._filmDetailsComponent.returnSelectedEmojiType();
       const messageUser = this._filmDetailsComponent.returnUserMessage();
 
-
-      // let messageUser = this._filmDetailsComponent.getElement().querySelector(`.film-details__comment-input`).value;
       if (choosenEmoji && messageUser) {
-        console.log(choosenEmoji);
         let userComment = {
           id: generateId(),
           emoji: `./images/emoji/${choosenEmoji}.png`,
@@ -194,19 +187,18 @@ export default class Film {
           author: `Anonim`,
           time: new Date(),
         };
-        console.log(userComment);
-        // console.log(this._film);
-        // const newComments = this._film.comments.slice();
-        // newComments.push(userComment);
-        // this._changeData(
-        //     Object.assign(
-        //         {},
-        //         this._film,
-        //         {
-        //           comments: newComments.slice()
-        //         }
-        //     )
-        // );
+
+        const newComments = this._film.comments.slice();
+        newComments.push(userComment);
+        this._changeData(
+            Object.assign(
+                {},
+                this._film,
+                {
+                  comments: newComments.slice()
+                }
+            )
+        );
       }
     }
   }

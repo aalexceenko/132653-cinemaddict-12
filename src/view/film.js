@@ -1,8 +1,8 @@
 import {getDuration} from "../utils/film.js";
 import {addClassName} from "../utils/common.js";
 import {CLASS_ITEM_ACTIVE} from "../const.js";
-// import AbstractView from "./abstract.js";
-import SmarttView from "./smart.js";
+import AbstractView from "./abstract.js";
+// import SmarttView from "./smart.js";
 
 const createFilmElementTemplate = (film) => {
   // console.log(comments.text.length);
@@ -35,12 +35,12 @@ const createFilmElementTemplate = (film) => {
   );
 };
 
-export default class Film extends SmarttView {
-  constructor(film, comments) {
+export default class Film extends AbstractView {
+  constructor(film) {
     super();
 
     this._film = film;
-    this._comments = comments;
+    // this._comments = comments;
 
     this._openPopUpClickHandler = this._openPopUpClickHandler.bind(this);
 
@@ -50,7 +50,9 @@ export default class Film extends SmarttView {
   }
 
   getTemplate() {
-    return createFilmElementTemplate(this._film, this._comments);
+    // return createFilmElementTemplate(this._film, this._comments);
+    return createFilmElementTemplate(this._film);
+
   }
 
   _openPopUpClickHandler(evt) {

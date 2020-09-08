@@ -1,6 +1,6 @@
-import {EMOJIS, CLASS_ITEM_ACTIVE} from "../const.js";
+import {EMOJIS} from "../const.js";
 import {getDuration} from "../utils/film.js";
-import {addClassName} from "../utils/common.js";
+
 // import AbstractView from "./abstract.js";
 import SmarttView from "./smart.js";
 
@@ -202,7 +202,7 @@ export default class PopUp extends SmarttView {
     this.setWatchedClickHandler(this._callback.watchedClick);
     this.setFavoriteClickHandler(this._callback.favoriteClick);
     this.setDeleteButtonClickHandler(this._callback.deleteButtonClick);
-    // this.setClickHandler(this._callback.click);
+    this.setClosePopUpClickHandler(this._callback.closePopup);
     this.setEnterKeyDown(this._callback.enterKeyDown);
 
   }
@@ -302,7 +302,7 @@ export default class PopUp extends SmarttView {
   }
 
   returnSelectedEmojiType() {
-    console.log(this.emoji);
+    // console.log(this.emoji);
     return this._emoji ? this._emoji : false;
   }
 
