@@ -75,7 +75,7 @@ export default class Film extends SmarttView {
   setWatchListClickHandler(callback) {
     this._callback.watchListClick = callback;
     this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`).addEventListener(`click`, this._watchListClickHandler);
-    console.log(1);
+    // console.log(1);
   }
 
   _watchedClickHandler(evt) {

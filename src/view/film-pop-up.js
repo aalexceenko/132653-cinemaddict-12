@@ -127,14 +127,14 @@ const createFilmDetailsTemplate = (film, emoji, message) => {
           </div>
 
           <section class="film-details__controls">
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist">
-            <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist ${addClassName(CLASS_ITEM_ACTIVE, isWatchlist)}">Add to watchlist</label>
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="watchlist" name="watchlist" ${isWatchlist ? `checked` : ``}>
+            <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist ">Add to watchlist</label>
 
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched">
-            <label for="watched" class="film-details__control-label film-details__control-label--watched ${addClassName(CLASS_ITEM_ACTIVE, isWatched)}">Already watched</label>
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${isWatched ? `checked` : ``}>
+            <label for="watched" class="film-details__control-label film-details__control-label--watched ">Already watched</label>
 
-            <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite">
-            <label for="favorite" class="film-details__control-label film-details__control-label--favorite ${addClassName(CLASS_ITEM_ACTIVE, isFavorites)}">Add to favorites</label>
+            <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${isFavorites ? `checked` : ``}>
+            <label for="favorite" class="film-details__control-label film-details__control-label--favorite ">Add to favorites</label>
           </section>
         </div>
 
@@ -145,7 +145,10 @@ const createFilmDetailsTemplate = (film, emoji, message) => {
             ${commentsListTemplate}
 
             <div class="film-details__new-comment">
-              <div for="add-emoji" class="film-details__add-emoji-label"></div>
+              <div for="add-emoji" class="film-details__add-emoji-label">
+
+              ${emoji ? `<img src="./images/emoji/${emoji}.png" width="55" height="55" alt="${emoji}"></img>` : ``}
+              </div>
 
               <label class="film-details__comment-label">
                 <textarea class="film-details__comment-input" placeholder="Select reaction below and write comment here" name="comment">${message ? message : ``}</textarea>
@@ -178,6 +181,7 @@ export default class PopUp extends SmarttView {
     this._deleteButtonClickHandler = this._deleteButtonClickHandler.bind(this);
     this._emojiClickHandler = this._emojiClickHandler.bind(this);
     this._commentInputHandler = this._commentInputHandler.bind(this);
+    this.returnSelectedEmojiType = this.returnSelectedEmojiType.bind(this);
     this._setInnerHandler();
 
   }
@@ -269,16 +273,19 @@ export default class PopUp extends SmarttView {
   _deleteButtonClickHandler(evt) {
     evt.preventDefault();
     this._callback.deleteButtonClick(evt.target.dataset.commentId);
-    console.log(evt.target.dataset.commentId);
+    // console.log(evt.target.dataset.commentId);
   }
 
   _emojiClickHandler(evt) {
-    this._updateEmoji(evt.target.dataset.emojiType);
+
+    this._updateEmoji(evt.target.alt);
     this.updateElement();
   }
 
   _updateEmoji(emojiType) {
+
     switch (emojiType) {
+
       case EmojiType.SMILE:
         this._emoji = EmojiType.SMILE;
         break;
@@ -292,6 +299,11 @@ export default class PopUp extends SmarttView {
         this._emoji = EmojiType.PUKE;
         break;
     }
+  }
+
+  returnSelectedEmojiType() {
+    console.log(this.emoji);
+    return this._emoji ? this._emoji : false;
   }
 
   returnUserMessage() {

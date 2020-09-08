@@ -14,7 +14,7 @@ export default class Film {
   constructor(filmListContainerComponent, changeDate, changeMode) {
     this._filmListContainerComponent = filmListContainerComponent;
     this._changeData = changeDate;
-    console.log(this._changeData);
+    // console.log(this._changeData);
     this._changeMode = changeMode;
 
     this._filmСomponent = null;
@@ -87,7 +87,7 @@ export default class Film {
   }
 
   _openPopup() {
-    console.log(this._film);
+    // console.log(this._film);
     document.querySelector(`body`).classList.add(`hide-overflow`);
     this._filmListContainerComponent.getElement().appendChild(this._filmDetailsComponent.getElement());
 
@@ -127,8 +127,8 @@ export default class Film {
   }
 
   _handleWatchListClick() {
-    console.log(this._changeData);
-    console.log(this._film);
+    // console.log(this._changeData);
+    // console.log(this._film);
     // debugger;
 
     this._changeData(
@@ -176,11 +176,18 @@ export default class Film {
   }
 
   _handleEnterKeyDown(evt) {
+
     if (evt.key === `Enter`) {
-      let choosenEmoji = this._filmDetailsComponent.getElement().querySelector(`input[type ='radio']`).value;
-      let messageUser = this._filmDetailsComponent.getElement().querySelector(`.film-details__comment-input`).value;
+
+      // let choosenEmoji = this._filmDetailsComponent.getElement().querySelector(`input[type ='radio']:cheked`).value;
+      const choosenEmoji = this._filmDetailsComponent.returnSelectedEmojiType();
+      const messageUser = this._filmDetailsComponent.returnUserMessage();
+
+
+      // let messageUser = this._filmDetailsComponent.getElement().querySelector(`.film-details__comment-input`).value;
       if (choosenEmoji && messageUser) {
-        const userComment = {
+        console.log(choosenEmoji);
+        let userComment = {
           id: generateId(),
           emoji: `./images/emoji/${choosenEmoji}.png`,
           text: messageUser,
@@ -188,18 +195,18 @@ export default class Film {
           time: new Date(),
         };
         console.log(userComment);
-        console.log(this._film);
-        const newComments = this._film.comments.slice(0);
-        newComments.push(userComment);
-        this._changeData(
-            Object.assign(
-                {},
-                this._film,
-                {
-                  comments: newComments.slice(0)
-                }
-            )
-        );
+        // console.log(this._film);
+        // const newComments = this._film.comments.slice();
+        // newComments.push(userComment);
+        // this._changeData(
+        //     Object.assign(
+        //         {},
+        //         this._film,
+        //         {
+        //           comments: newComments.slice()
+        //         }
+        //     )
+        // );
       }
     }
   }
