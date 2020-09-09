@@ -33,7 +33,7 @@ const createCommentsListTemplate = (comments) => {
       <p class="film-details__comment-info">
         <span class="film-details__comment-author">${comment.author}</span>
         <span class="film-details__comment-day">${comment.date.toLocaleString(`en-US`)}</span>
-        <button class="film-details__comment-delete data-comment-id ="${comment.id}"">Delete</button>
+        <button class="film-details__comment-delete" data-comment-id ="${comment.id}">Delete</button>
       </p>
     </div>
   </li>`).join(``)}
@@ -209,7 +209,7 @@ export default class PopUp extends SmarttView {
 
   _commentInputHandler(evt) {
     evt.preventDefault();
-    // this.updateData({message: evt.target.value}, true);
+    this.updateData({message: evt.target.value}, true);
     this._message = evt.target.value;
   }
 
@@ -273,7 +273,6 @@ export default class PopUp extends SmarttView {
   _deleteButtonClickHandler(evt) {
     evt.preventDefault();
     this._callback.deleteButtonClick(evt.target.dataset.commentId);
-    // console.log(evt.target.dataset.commentId);
   }
 
   _emojiClickHandler(evt) {
@@ -302,7 +301,6 @@ export default class PopUp extends SmarttView {
   }
 
   returnSelectedEmojiType() {
-    // console.log(this.emoji);
     return this._emoji ? this._emoji : false;
   }
 

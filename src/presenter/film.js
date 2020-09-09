@@ -41,9 +41,6 @@ export default class Film {
     const prevFilmComponent = this._filmComponent;
     const prevFilmDetailsComponent = this._filmDetailsComponent;
 
-    // this._comments = generateComment();
-    // console.log(this._comments);
-    // console.log(film);
 
     this._filmComponent = new FilmView(film, this._comments);
     this._filmDetailsComponent = new PopUpView(film, this._comments);
@@ -70,11 +67,13 @@ export default class Film {
     }
 
     if (this._filmListContainerComponent.getElement().contains(prevFilmComponent.getElement())) {
-      replace(this._filmComponent, prevFilmComponent);
+      replace(prevFilmComponent, this._filmComponent);
+
     }
 
     if (this._filmListContainerComponent.getElement().contains(prevFilmDetailsComponent.getElement())) {
-      replace(this._filmDetailsComponent, prevFilmDetailsComponent);
+      replace(prevFilmDetailsComponent, this._filmDetailsComponent);
+
     }
 
     remove(prevFilmComponent);
@@ -88,10 +87,9 @@ export default class Film {
   }
 
   _openPopup() {
-    // console.log(this._film);
     document.querySelector(`body`).classList.add(`hide-overflow`);
     this._filmListContainerComponent.getElement().appendChild(this._filmDetailsComponent.getElement());
-
+    this._filmDetailsComponent.setClosePopUpClickHandler(this._handleClosePopUpClick);
     document.addEventListener(`keydown`, this._onEscKeyDown);
     document.addEventListener(`keydown`, this._handleEnterKeyDown);
 
@@ -114,10 +112,8 @@ export default class Film {
     if (evt.key === `Escape` || evt.key === `Esc`) {
       evt.preventDefault();
       this._closePopup();
-      document.removeEventListener(`keydown`, this._onEscKeyDown);
-      document.removeEventListener(`keydown`, this._handleEnterKeyDown);
-      this._filmDetailsComponent.reset(this._film);
 
+      this._filmDetailsComponent.reset(this._film);
     }
   }
 
@@ -182,10 +178,10 @@ export default class Film {
       if (choosenEmoji && messageUser) {
         let userComment = {
           id: generateId(),
-          emoji: `./images/emoji/${choosenEmoji}.png`,
+          emoji: choosenEmoji,
           text: messageUser,
           author: `Anonim`,
-          time: new Date(),
+          date: new Date(),
         };
 
         const newComments = this._film.comments.slice();

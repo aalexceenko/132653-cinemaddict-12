@@ -50,7 +50,7 @@ export default class Film extends AbstractView {
   }
 
   getTemplate() {
-    // return createFilmElementTemplate(this._film, this._comments);
+
     return createFilmElementTemplate(this._film);
 
   }
@@ -77,7 +77,6 @@ export default class Film extends AbstractView {
   setWatchListClickHandler(callback) {
     this._callback.watchListClick = callback;
     this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`).addEventListener(`click`, this._watchListClickHandler);
-    // console.log(1);
   }
 
   _watchedClickHandler(evt) {
