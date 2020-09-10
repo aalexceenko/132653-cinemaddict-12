@@ -1,6 +1,5 @@
 import FilmView from "../view/film.js";
 import PopUpView from "../view/film-pop-up.js";
-// import {generateComment} from "../mock/comments.js";
 import {render, RenderPosition, remove, replace} from "../utils/render.js";
 import {generateId} from "../utils/common.js";
 
@@ -14,7 +13,6 @@ export default class Film {
   constructor(filmListContainerComponent, changeDate, changeMode) {
     this._filmListContainerComponent = filmListContainerComponent;
     this._changeData = changeDate;
-    // console.log(this._changeData);
     this._changeMode = changeMode;
 
     this._filmСomponent = null;
@@ -166,7 +164,7 @@ export default class Film {
 
   _handleDeleteButtonClick(commentId) {
     const newComments = this._film.comments.filter((comment) => comment.id !== commentId);
-    this._changeData(Object.assign({}, this._film, {comments: newComments.slice(0)}));
+    this._changeData(Object.assign({}, this._film, {comments: newComments}));
   }
 
   _handleEnterKeyDown(evt) {
@@ -176,7 +174,7 @@ export default class Film {
       const messageUser = this._filmDetailsComponent.returnUserMessage();
 
       if (choosenEmoji && messageUser) {
-        let userComment = {
+        const userComment = {
           id: generateId(),
           emoji: choosenEmoji,
           text: messageUser,
@@ -191,7 +189,7 @@ export default class Film {
                 {},
                 this._film,
                 {
-                  comments: newComments.slice()
+                  comments: newComments
                 }
             )
         );
