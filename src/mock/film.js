@@ -1,6 +1,6 @@
-import {getRandomInteger, getRandomFloat, getRandomArrayItem, getRandomArrayItems} from "../utils/common.js";
+import {getRandomInteger, getRandomFloat, getRandomArrayItem, getRandomArrayItems, generateId} from "../utils/common.js";
 import {generateDate} from "../utils/film.js";
-import {EMOJIS} from "../const.js";
+import {generateComment} from "./comments.js";
 
 const TITLES = [
   `21`,
@@ -73,23 +73,11 @@ const DESCRIPTION_STRINGS = [
 ];
 
 
-const generateComment = () => {
-  const text = DESCRIPTION_STRINGS[getRandomInteger(0, DESCRIPTION_STRINGS.length - 1)];
-  const emoji = EMOJIS[getRandomInteger(0, EMOJIS.length - 1)];
-
-  return {
-    emoji,
-    date: generateDate(new Date(2020, 0, 1), new Date()),
-    author: NAMES[getRandomInteger(1, NAMES.length - 1)],
-    text
-  };
-
-};
-
 export const generateFilm = () => {
   const comments = new Array(getRandomInteger(0, 5)).fill().map(generateComment);
 
   return {
+    id: generateId(),
     title: getRandomArrayItem(TITLES),
     origanalTitle: getRandomArrayItem(ORIGINAL_TITLES),
     poster: getRandomArrayItem(POSTER),
