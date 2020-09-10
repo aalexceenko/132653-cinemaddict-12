@@ -2,10 +2,8 @@ import {getDuration} from "../utils/film.js";
 import {addClassName} from "../utils/common.js";
 import {CLASS_ITEM_ACTIVE} from "../const.js";
 import AbstractView from "./abstract.js";
-// import SmarttView from "./smart.js";
 
 const createFilmElementTemplate = (film) => {
-  // console.log(comments.text.length);
 
   const {title, poster, rating, year, runtime, genres, description, comments, isWatchlist, isWatched, isFavorites} = film;
   const duration = getDuration(runtime);
@@ -40,7 +38,6 @@ export default class Film extends AbstractView {
     super();
 
     this._film = film;
-    // this._comments = comments;
 
     this._openPopUpClickHandler = this._openPopUpClickHandler.bind(this);
 
