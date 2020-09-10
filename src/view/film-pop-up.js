@@ -1,15 +1,7 @@
 import {EMOJIS} from "../const.js";
 import {getDuration} from "../utils/film.js";
-
-// import AbstractView from "./abstract.js";
 import SmarttView from "./smart.js";
 
-const EmojiType = {
-  SMILE: `smile`,
-  SLEEPING: `sleeping`,
-  PUKE: `puke`,
-  ANGRY: `angry`
-};
 
 const createGenresTemplate = (genres) => {
   return (
@@ -24,7 +16,7 @@ const createCommentsListTemplate = (comments) => {
 
   return (
     `<ul class="film-details__comments-list">
-    ${(comments).map((comment) => `<li class="film-details__comment">
+    ${comments.map((comment) => `<li class="film-details__comment">
     <span class="film-details__comment-emoji">
       <img src="./images/emoji/${comment.emoji}.png" width="55" height="55" alt="emoji-${comment.emoji}">
     </span>
@@ -33,7 +25,7 @@ const createCommentsListTemplate = (comments) => {
       <p class="film-details__comment-info">
         <span class="film-details__comment-author">${comment.author}</span>
         <span class="film-details__comment-day">${comment.date.toLocaleString(`en-US`)}</span>
-        <button class="film-details__comment-delete" data-comment-id ="${comment.id}">Delete</button>
+        <button class="film-details__comment-delete" data-comment-id="${comment.id}">Delete</button>
       </p>
     </div>
   </li>`).join(``)}
@@ -57,7 +49,7 @@ const createFilmDetailsTemplate = (film, emoji, message) => {
   const {title, year, origanalTitle, writer, director, age, actors, country, poster, rating, comments, runtime, description, isFavorites, isWatched, isWatchlist, genres} = film;
 
   const commentsListTemplate = createCommentsListTemplate(comments);
-  const emojiList = createEmojiList(EMOJIS, createEmojiList, emoji);
+  const emojiList = createEmojiList();
   const genresTemplate = createGenresTemplate(genres);
   const date = `${year.getDate()} ${year.toLocaleString(`en-US`, {month: `long`, year: `numeric`})}`;
   const duration = getDuration(runtime);
@@ -182,11 +174,11 @@ export default class PopUp extends SmarttView {
     this._emojiClickHandler = this._emojiClickHandler.bind(this);
     this._commentInputHandler = this._commentInputHandler.bind(this);
     this.returnSelectedEmojiType = this.returnSelectedEmojiType.bind(this);
-    this._setInnerHandler();
+    this._setInnerHandlers();
 
   }
 
-  _setInnerHandler() {
+  _setInnerHandlers() {
     this.getElement()
       .querySelectorAll(`.film-details__emoji-label`)
       .forEach((element) => element.addEventListener(`click`, this._emojiClickHandler));
@@ -197,7 +189,7 @@ export default class PopUp extends SmarttView {
   }
 
   restoreHandlers() {
-    this._setInnerHandler();
+    this._setInnerHandlers();
     this.setWatchListClickHandler(this._callback.watchListClick);
     this.setWatchedClickHandler(this._callback.watchedClick);
     this.setFavoriteClickHandler(this._callback.favoriteClick);
@@ -282,22 +274,7 @@ export default class PopUp extends SmarttView {
   }
 
   _updateEmoji(emojiType) {
-
-    switch (emojiType) {
-
-      case EmojiType.SMILE:
-        this._emoji = EmojiType.SMILE;
-        break;
-      case EmojiType.SLEEPING:
-        this._emoji = EmojiType.SLEEPING;
-        break;
-      case EmojiType.ANGRY:
-        this._emoji = EmojiType.ANGRY;
-        break;
-      case EmojiType.PUKE:
-        this._emoji = EmojiType.PUKE;
-        break;
-    }
+    this._emoji = emojiType;
   }
 
   returnSelectedEmojiType() {
