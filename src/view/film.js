@@ -1,4 +1,4 @@
-import {getDuration} from "../utils/film.js";
+import {getDuration, getYearFromDate} from "../utils/film.js";
 import {addClassName} from "../utils/common.js";
 import {CLASS_ITEM_ACTIVE} from "../const.js";
 import AbstractView from "./abstract.js";
@@ -7,6 +7,7 @@ const createFilmElementTemplate = (film) => {
 
   const {title, poster, rating, year, runtime, genres, description, comments, isWatchlist, isWatched, isFavorites} = film;
   const duration = getDuration(runtime);
+  const yearFilm = getYearFromDate(year);
   let descriptionText = description ? description.join(` `) : `N/A`;
   if (descriptionText.length > 140) {
     descriptionText = descriptionText.slice(0, 139) + `…`;
@@ -17,7 +18,7 @@ const createFilmElementTemplate = (film) => {
       <h3 class="film-card__title">${title || `N/A`}</h3>
       <p class="film-card__rating">${rating}</p>
       <p class="film-card__info">
-        <span class="film-card__year">${year.getFullYear()}</span>
+        <span class="film-card__year">${yearFilm}</span>
         <span class="film-card__duration">${duration}</span>
         <span class="film-card__genre">${genres[0] || `N/A`}</span>
       </p>

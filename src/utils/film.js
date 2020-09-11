@@ -1,11 +1,18 @@
-const MINUTES_IN_HOUR = 60;
-const SECONDS_IN_MINUTE = 60;
+import moment from 'moment';
 
-export const getDuration = (time) => {
-  const hours = Math.floor(time / MINUTES_IN_HOUR) > 0 ? `${Math.floor(time / MINUTES_IN_HOUR)}h` : ``;
-  const minutes = time % MINUTES_IN_HOUR > 0 ? `${time % SECONDS_IN_MINUTE}m` : ``;
-  return `${hours} ${minutes}`;
+export const getDuration = (minutes) => {
+
+  const duration = moment.duration(minutes, `minutes`);
+  const format = minutes > 60 ? `H[h] mm[m]` : `mm[m]`;
+  return moment.utc(duration.as(`milliseconds`)).format(format).toString();
 };
+
+export const getDayMonthYearFromDate = (date) => moment(date).format(`DD MMMM YYYY`);
+
+export const getDateCommentFormat = (date) => moment(date).format(`YYYY/MM/DD HH:mm`);
+
+export const getYearFromDate = (data) => moment(data).year();
+
 
 export const generateDate = (start, end) => {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));

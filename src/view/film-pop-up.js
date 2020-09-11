@@ -1,5 +1,6 @@
 import {EMOJIS} from "../const.js";
-import {getDuration} from "../utils/film.js";
+import {getDuration, getDayMonthYearFromDate, getDateCommentFormat} from "../utils/film.js";
+
 import SmarttView from "./smart.js";
 
 
@@ -24,7 +25,7 @@ const createCommentsListTemplate = (comments) => {
       <p class="film-details__comment-text">${comment.text}</p>
       <p class="film-details__comment-info">
         <span class="film-details__comment-author">${comment.author}</span>
-        <span class="film-details__comment-day">${comment.date.toLocaleString(`en-US`)}</span>
+        <span class="film-details__comment-day">${getDateCommentFormat(comment.date)}</span>
         <button class="film-details__comment-delete" data-comment-id="${comment.id}">Delete</button>
       </p>
     </div>
@@ -51,10 +52,11 @@ const createFilmDetailsTemplate = (film, emoji, message) => {
   const commentsListTemplate = createCommentsListTemplate(comments);
   const emojiList = createEmojiList();
   const genresTemplate = createGenresTemplate(genres);
-  const date = `${year.getDate()} ${year.toLocaleString(`en-US`, {month: `long`, year: `numeric`})}`;
+  const date = getDayMonthYearFromDate(year);
   const duration = getDuration(runtime);
   const writers = writer ? writer.join(`, `) : `N/A`;
   const actorsName = actors ? actors.join(`, `) : `N/A`;
+
 
   return (
     `<section class="film-details">
