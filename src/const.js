@@ -6,3 +6,15 @@ export const SortType = {
   DATE_DOWN: `date-down`,
   RATING_DOWN: `rating-down`
 };
+
+export const UserAction = {
+  ADD_WATCHLIST: `ADD_WATCHLIST`,
+  ADD_WATCHED: `ADD_TASK`,
+  ADD_FAVORITE: `ADD_FAVORITE`,
+  UPDATE_FILM: `UPDATE_FILM`,
+};
+
+export const UpdateType = {
+  MINOR: `MINOR`,
+  MAJOR: `MAJOR`
+};

@@ -5,12 +5,16 @@ import {generateFilm} from "./mock/film.js";
 import {generateFilter} from "./mock/navigation.js";
 import {render, RenderPosition} from "./utils/render.js";
 import MovieListPresenter from "./presenter/films-container.js";
+import MoviesModel from './model/movies.js';
 
 
 const FILM_COUNT = 6;
 
 const films = new Array(FILM_COUNT).fill().map(generateFilm);
 const filters = generateFilter(films);
+
+const moviesModel = new MoviesModel();
+moviesModel.setFilms(films);
 
 
 const siteHeaderElement = document.querySelector(`.header`);
@@ -20,8 +24,8 @@ render(siteHeaderElement, new HeaderView(films), RenderPosition.BEFOREEND);
 render(siteMainElement, new NavigationView(filters), RenderPosition.BEFOREEND);
 
 
-const filmContainerPresenter = new MovieListPresenter(siteMainElement);
-filmContainerPresenter.init(films);
+const filmContainerPresenter = new MovieListPresenter(siteMainElement, moviesModel);
+filmContainerPresenter.init();
 
 
 const footerStatistisaContainer = document.querySelector(`.footer__statistics`);
