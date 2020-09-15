@@ -6,6 +6,7 @@ import {generateFilter} from "./mock/navigation.js";
 import {render, RenderPosition} from "./utils/render.js";
 import MovieListPresenter from "./presenter/films-container.js";
 import MoviesModel from './model/movies.js';
+import FilterModel from './model/filter.js';
 
 
 const FILM_COUNT = 6;
@@ -15,6 +16,7 @@ const filters = generateFilter(films);
 
 const moviesModel = new MoviesModel();
 moviesModel.setFilms(films);
+const filterModel = new FilterModel();
 
 
 const siteHeaderElement = document.querySelector(`.header`);
