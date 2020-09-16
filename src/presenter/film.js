@@ -173,7 +173,7 @@ export default class Film {
   _handleDeleteButtonClick(commentId) {
     const newComments = this._film.comments.filter((comment) => comment.id !== commentId);
     this._changeData(
-        UserAction.UPDATE_FILM,
+        UserAction.DELETE,
         UpdateType.MINOR,
         Object.assign(
             {},
@@ -187,7 +187,7 @@ export default class Film {
 
   _handleEnterKeyDown(evt) {
 
-    if (evt.key === `Enter`) {
+    if ((evt.ctrlKey || evt.metaKey) && (evt.key === `Enter`)) {
       const choosenEmoji = this._filmDetailsComponent.returnSelectedEmojiType();
       const messageUser = this._filmDetailsComponent.returnUserMessage();
 
@@ -203,7 +203,7 @@ export default class Film {
         const newComments = this._film.comments.slice();
         newComments.push(userComment);
         this._changeData(
-            UserAction.UPDATE_FILM,
+            UserAction.ADD_COMMENT,
             UpdateType.MINOR,
             Object.assign(
                 {},

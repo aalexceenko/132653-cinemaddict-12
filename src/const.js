@@ -8,9 +8,8 @@ export const SortType = {
 };
 
 export const UserAction = {
-  ADD_WATCHLIST: `ADD_WATCHLIST`,
-  ADD_WATCHED: `ADD_TASK`,
-  ADD_FAVORITE: `ADD_FAVORITE`,
+  DELETE_COMMENT: `DELETE`,
+  ADD_COMMENT: `ADD_COMMENT`,
   UPDATE_FILM: `UPDATE_FILM`,
 };
 
