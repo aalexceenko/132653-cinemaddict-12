@@ -1,4 +1,4 @@
-import FilterView from "../view/filter.js";
+import FilterView from "../view/navigation.js";
 import {render, RenderPosition, replace, remove} from "../utils/render.js";
 import {filter} from "../utils/filter.js";
 import {FilterType, UpdateType} from "../const.js";
@@ -35,7 +35,8 @@ export default class Filter {
       return;
     }
 
-    replace(this._filterComponent, prevFilterComponent);
+    replace(prevFilterComponent, this._filterComponent);
+
     remove(prevFilterComponent);
   }
 
@@ -55,11 +56,6 @@ export default class Filter {
     const films = this._filmsModel.getFilms();
 
     return [
-      {
-        type: FilterType.ALL_MOVIES,
-        name: `All movies`,
-        count: filter[FilterType.ALL_MOVIES](films).length
-      },
       {
         type: FilterType.WATCHLIST,
         name: `Watchlist`,
