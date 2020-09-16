@@ -173,7 +173,7 @@ export default class Film {
   _handleDeleteButtonClick(commentId) {
     const newComments = this._film.comments.filter((comment) => comment.id !== commentId);
     this._changeData(
-        UserAction.DELETE,
+        UserAction.DELETE_COMMENT,
         UpdateType.MINOR,
         Object.assign(
             {},

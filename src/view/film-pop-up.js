@@ -1,6 +1,7 @@
+import he from 'he';
+
 import {EMOJIS} from "../const.js";
 import {getDuration, getDayMonthYearFromDate, getDateCommentFormat} from "../utils/film.js";
-import he from 'he';
 import SmarttView from "./smart.js";
 
 
@@ -22,7 +23,7 @@ const createCommentsListTemplate = (comments) => {
       <img src="./images/emoji/${comment.emoji}.png" width="55" height="55" alt="emoji-${comment.emoji}">
     </span>
     <div>
-      <p class="film-details__comment-text">${he.encode(comment.text)}</p>
+      <p class="film-details__comment-text">${he.encode(String(comment.text))}</p>
       <p class="film-details__comment-info">
         <span class="film-details__comment-author">${comment.author}</span>
         <span class="film-details__comment-day">${getDateCommentFormat(comment.date)}</span>

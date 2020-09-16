@@ -23,8 +23,8 @@ export default class Filter {
 
   init() {
     this._currentFilter = this._filterModel.getFilter();
-
     const filters = this._getFilters();
+
     const prevFilterComponent = this._filterComponent;
 
     this._filterComponent = new FilterView(filters, this._currentFilter);
@@ -56,6 +56,11 @@ export default class Filter {
     const films = this._filmsModel.getFilms();
 
     return [
+      {
+        type: FilterType.ALL_MOVIES,
+        name: `all movies`,
+        count: ``,
+      },
       {
         type: FilterType.WATCHLIST,
         name: `Watchlist`,
