@@ -6,3 +6,22 @@ export const SortType = {
   DATE_DOWN: `date-down`,
   RATING_DOWN: `rating-down`
 };
+
+export const UserAction = {
+  DELETE_COMMENT: `DELETE`,
+  ADD_COMMENT: `ADD_COMMENT`,
+  UPDATE_FILM: `UPDATE_FILM`,
+};
+
+export const UpdateType = {
+  MINOR: `MINOR`,
+  MAJOR: `MAJOR`
+};
+
+export const FilterType = {
+  ALL_MOVIES: `all movies`,
+  WATCHLIST: `watchlist`,
+  HISTORY: `history`,
+  FAVORITES: `favorites`,
+};
+

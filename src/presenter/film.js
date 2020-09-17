@@ -2,6 +2,8 @@ import FilmView from "../view/film.js";
 import PopUpView from "../view/film-pop-up.js";
 import {render, RenderPosition, remove, replace} from "../utils/render.js";
 import {generateId} from "../utils/common.js";
+import {UserAction, UpdateType} from '../const.js';
+
 
 const Mode = {
   DEFAULT: `DEFAULT`,
@@ -126,6 +128,8 @@ export default class Film {
   _handleWatchListClick() {
 
     this._changeData(
+        UserAction.UPDATE_FILM,
+        UpdateType.MINOR,
         Object.assign(
             {},
             this._film,
@@ -140,6 +144,8 @@ export default class Film {
   _handleWatchedClick() {
 
     this._changeData(
+        UserAction.UPDATE_FILM,
+        UpdateType.MINOR,
         Object.assign(
             {},
             this._film,
@@ -152,6 +158,8 @@ export default class Film {
 
   _handleFavoriteClick() {
     this._changeData(
+        UserAction.UPDATE_FILM,
+        UpdateType.MINOR,
         Object.assign(
             {},
             this._film,
@@ -164,12 +172,22 @@ export default class Film {
 
   _handleDeleteButtonClick(commentId) {
     const newComments = this._film.comments.filter((comment) => comment.id !== commentId);
-    this._changeData(Object.assign({}, this._film, {comments: newComments}));
+    this._changeData(
+        UserAction.DELETE_COMMENT,
+        UpdateType.MINOR,
+        Object.assign(
+            {},
+            this._film,
+            {
+              comments: newComments
+            }
+        )
+    );
   }
 
   _handleEnterKeyDown(evt) {
 
-    if (evt.key === `Enter`) {
+    if ((evt.ctrlKey || evt.metaKey) && (evt.key === `Enter`)) {
       const choosenEmoji = this._filmDetailsComponent.returnSelectedEmojiType();
       const messageUser = this._filmDetailsComponent.returnUserMessage();
 
@@ -185,6 +203,8 @@ export default class Film {
         const newComments = this._film.comments.slice();
         newComments.push(userComment);
         this._changeData(
+            UserAction.ADD_COMMENT,
+            UpdateType.MINOR,
             Object.assign(
                 {},
                 this._film,
