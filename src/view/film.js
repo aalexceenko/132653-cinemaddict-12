@@ -7,7 +7,6 @@ const createFilmElementTemplate = (film) => {
 
   const {title, poster, rating, year, runtime, genres, description, comments, isWatchlist, isWatched, isFavorites} = film;
 
-  console.log(description);
   const duration = getDuration(runtime);
   const yearFilm = getYearFromDate(year);
   let descriptionText = description ? description : `N/A`;

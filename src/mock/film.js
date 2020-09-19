@@ -1,6 +1,6 @@
 import {getRandomInteger, getRandomFloat, getRandomArrayItem, getRandomArrayItems, generateId} from "../utils/common.js";
 import {generateDate} from "../utils/film.js";
-import {generateComment} from "./comments.js";
+// import {generateComment} from "./comments.js";
 
 const TITLES = [
   `21`,

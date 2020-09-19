@@ -19,6 +19,7 @@ export default class MovieList {
   constructor(filmsContainer, moviesModel, filterModel, api) {
     this._moviesModel = moviesModel;
     this._filterModel = filterModel;
+    this._filmsComments = null;
 
     this._filmsContainer = filmsContainer;
     this._renderedFilmCount = FILM_COUNT_PER_STEP;
@@ -111,10 +112,17 @@ export default class MovieList {
         });
         break;
       case UserAction.DELETE_COMMENT:
-        this._moviesModel.updateFilm(updateType, update);
+        // this._moviesModel.updateFilm(updateType, update);
+        console.log(update);
+        this._api.deleteComment(update.deletedIdComment).then(() => {
+          this._moviesModel.updateFilm(updateType, update);
+        });
         break;
       case UserAction.ADD_COMMENT:
-        this._moviesModel.updateFilm(updateType, update);
+        // this._moviesModel.updateFilm(updateType, update);
+        this._api.addComment(update).then((response) => {
+          this._moviesModel.updateFilm(updateType, response);
+        });
         break;
     }
   }
@@ -169,7 +177,7 @@ export default class MovieList {
 
   _renderFilm(film) {
 
-    const filmPresenter = new FilmPresenter(this._filmListContainerComponent, this._handleViewAction, this._handleModeChange);
+    const filmPresenter = new FilmPresenter(this._filmListContainerComponent, this._handleViewAction, this._handleModeChange, this._api);
     filmPresenter.init(film);
     this._filmPresenter[film.id] = filmPresenter;
   }
