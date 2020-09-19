@@ -4,6 +4,7 @@ import FilmsListView from "../view/films-list.js";
 import FilmsListContainerView from "../view/films-list-container.js";
 import NoFilmView from "../view/no-film.js";
 import FilmPresenter from "./film.js";
+import LoadingView from "../view/loading.js";
 import {SortType} from "../const.js";
 import {sortFilmDown, sortFilmRating} from "../utils/film.js";
 import SortView from "../view/sort.js";
@@ -15,7 +16,7 @@ import {filter} from "../utils/filter.js";
 const FILM_COUNT_PER_STEP = 5;
 
 export default class MovieList {
-  constructor(filmsContainer, moviesModel, filterModel) {
+  constructor(filmsContainer, moviesModel, filterModel, api) {
     this._moviesModel = moviesModel;
     this._filterModel = filterModel;
 
@@ -23,6 +24,10 @@ export default class MovieList {
     this._renderedFilmCount = FILM_COUNT_PER_STEP;
     this._currentSortType = SortType.DEFAULT;
     this._filmPresenter = {};
+    this._isLoading = true;
+    this._api = api;
+
+
 
     this._sortComponent = null;
     this._showMoreButtonComponent = null;
@@ -31,6 +36,8 @@ export default class MovieList {
     this._filmListComponent = new FilmsListView();
     this._filmListContainerComponent = new FilmsListContainerView();
     this._noFilmComponent = new NoFilmView();
+    this._loadingComponent = new LoadingView();
+
 
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
@@ -98,7 +105,10 @@ export default class MovieList {
 
     switch (actionType) {
       case UserAction.UPDATE_FILM:
-        this._moviesModel.updateFilm(updateType, update);
+        // this._moviesModel.updateFilm(updateType, update);
+        this._api.updateFilm(update).then((response) => {
+          this._moviesModel.updateFilm(updateType, response);
+        });
         break;
       case UserAction.DELETE_COMMENT:
         this._moviesModel.updateFilm(updateType, update);
@@ -118,6 +128,12 @@ export default class MovieList {
       case UpdateType.MAJOR:
         this._clearBoard({resetRenderedTaskCount: true, resetSortType: true});
         this._renderBoard();
+        break;
+      case UpdateType.INIT:
+        this._isLoading = false;
+        remove(this._loadingComponent);
+        this._renderBoard();
+        break;
     }
   }
 
@@ -132,6 +148,8 @@ export default class MovieList {
     remove(this._sortComponent);
     remove(this._noFilmComponent);
     remove(this._showMoreButtonComponent);
+    remove(this._loadingComponent);
+
 
     if (resetRenderedTaskCount) {
       this._renderedFilmCount = FILM_COUNT_PER_STEP;
@@ -163,6 +181,10 @@ export default class MovieList {
   _renderNoFilms() {
 
     render(this._filmListComponent, this._noFilmComponent, RenderPosition.BEFOREEND);
+  }
+
+  _renderLoading() {
+    render(this._filmListComponent, this._loadingComponent, RenderPosition.AFTERBEGIN);
   }
 
   _handleShowMoreButtonClick() {
@@ -207,6 +229,12 @@ export default class MovieList {
 
 
   _renderBoard() {
+
+    if (this._isLoading) {
+      this._renderLoading();
+      return;
+    }
+
     const films = this._getFilms();
     const filmCount = films.length;
 

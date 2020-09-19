@@ -6,6 +6,7 @@ import SmarttView from "./smart.js";
 
 
 const createGenresTemplate = (genres) => {
+  console.log(genres);
   return (
     `<td class="film-details__term">${genres.length > 1 ? `Genres` : `Genre`}</td>
     <td class="film-details__cell">
@@ -15,6 +16,7 @@ const createGenresTemplate = (genres) => {
 };
 
 const createCommentsListTemplate = (comments) => {
+  console.log(comments);
 
   return (
     `<ul class="film-details__comments-list">
@@ -40,7 +42,7 @@ const createEmojiList = () => {
     `<div class="film-details__emoji-list">
     ${EMOJIS.map((emoji) => `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-${emoji}" value="${emoji}">
     <label class="film-details__emoji-label" for="emoji-${emoji}">
-      <img src="./images/emoji/${emoji}.png" width="30" height="30" alt="${emoji}">
+      <img src="./${emoji}.png" width="30" height="30" alt="${emoji}">
     </label>`).join(``)}
         </div>`
   );
@@ -68,7 +70,7 @@ const createFilmDetailsTemplate = (film, emoji, message) => {
           </div>
           <div class="film-details__info-wrap">
             <div class="film-details__poster">
-              <img class="film-details__poster-img" src="./images/posters/${poster}" alt="${title}">
+              <img class="film-details__poster-img" src="./${poster}" alt="${title}">
 
               <p class="film-details__age">${age}</p>
             </div>
