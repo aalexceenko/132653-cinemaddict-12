@@ -6,6 +6,7 @@ import SmarttView from "./smart.js";
 
 
 const createGenresTemplate = (genres) => {
+
   return (
     `<td class="film-details__term">${genres.length > 1 ? `Genres` : `Genre`}</td>
     <td class="film-details__cell">
@@ -15,24 +16,24 @@ const createGenresTemplate = (genres) => {
 };
 
 const createCommentsListTemplate = (comments) => {
+  if (comments) {
 
-  return (
-    `<ul class="film-details__comments-list">
-    ${comments.map((comment) => `<li class="film-details__comment">
-    <span class="film-details__comment-emoji">
-      <img src="./images/emoji/${comment.emoji}.png" width="55" height="55" alt="emoji-${comment.emoji}">
-    </span>
-    <div>
-      <p class="film-details__comment-text">${he.encode(String(comment.text))}</p>
-      <p class="film-details__comment-info">
-        <span class="film-details__comment-author">${comment.author}</span>
-        <span class="film-details__comment-day">${getDateCommentFormat(comment.date)}</span>
-        <button class="film-details__comment-delete" data-comment-id="${comment.id}">Delete</button>
-      </p>
-    </div>
-  </li>`).join(``)}
-  </ul>`
-  );
+    return comments.map(({id, emotion, comment, author, date}) => `<li class="film-details__comment" data-comment-id="${id}">
+      <span class="film-details__comment-emoji">
+        <img src="./images/emoji/${emotion}.png" width="55" height="55" alt="emoji-${emotion}">
+      </span>
+      <div>
+        <p class="film-details__comment-text">${he.encode(String(comment))}</p>
+        <p class="film-details__comment-info">
+          <span class="film-details__comment-author">${author}</span>
+          <span class="film-details__comment-day">${getDateCommentFormat(date)}</span>
+          <button class="film-details__comment-delete" data-comment-id="${id}">Delete</button>
+        </p>
+      </div>
+    </li>`).join(``);
+
+  }
+  return false;
 };
 
 const createEmojiList = () => {
@@ -46,11 +47,11 @@ const createEmojiList = () => {
   );
 };
 
-const createFilmDetailsTemplate = (film, emoji, message) => {
+const createFilmDetailsTemplate = (film, emoji, message, filmsComments) => {
 
   const {title, year, origanalTitle, writer, director, age, actors, country, poster, rating, comments, runtime, description, isFavorites, isWatched, isWatchlist, genres} = film;
 
-  const commentsListTemplate = createCommentsListTemplate(comments);
+  const commentsListTemplate = createCommentsListTemplate(filmsComments);
   const emojiList = createEmojiList();
   const genresTemplate = createGenresTemplate(genres);
   const date = getDayMonthYearFromDate(year);
@@ -68,7 +69,7 @@ const createFilmDetailsTemplate = (film, emoji, message) => {
           </div>
           <div class="film-details__info-wrap">
             <div class="film-details__poster">
-              <img class="film-details__poster-img" src="./images/posters/${poster}" alt="${title}">
+              <img class="film-details__poster-img" src="./${poster}" alt="${title}">
 
               <p class="film-details__age">${age}</p>
             </div>
@@ -137,7 +138,11 @@ const createFilmDetailsTemplate = (film, emoji, message) => {
           <section class="film-details__comments-wrap">
             <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
 
+
+
+            <ul class="film-details__comments-list">
             ${commentsListTemplate}
+            </ul>
 
             <div class="film-details__new-comment">
               <div for="add-emoji" class="film-details__add-emoji-label">
@@ -160,9 +165,11 @@ const createFilmDetailsTemplate = (film, emoji, message) => {
 };
 
 export default class PopUp extends SmarttView {
-  constructor(film) {
+  constructor(film, comments) {
+
     super();
 
+    this._filmsComments = comments;
     this._film = film;
     this._emoji = null;
     this._message = null;
@@ -209,7 +216,7 @@ export default class PopUp extends SmarttView {
   }
 
   getTemplate() {
-    return createFilmDetailsTemplate(this._film, this._emoji, this._message);
+    return createFilmDetailsTemplate(this._film, this._emoji, this._message, this._filmsComments);
   }
 
   setEnterKeyDown(callback) {
@@ -292,4 +299,9 @@ export default class PopUp extends SmarttView {
     this._emoji = null;
     this._message = null;
   }
+
+  setFilmComments(comments) {
+    this._filmsComments = comments;
+  }
+
 }

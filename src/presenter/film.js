@@ -12,14 +12,16 @@ const Mode = {
 
 
 export default class Film {
-  constructor(filmListContainerComponent, changeDate, changeMode) {
+  constructor(filmListContainerComponent, changeDate, changeMode, api) {
     this._filmListContainerComponent = filmListContainerComponent;
     this._changeData = changeDate;
     this._changeMode = changeMode;
+    this._filmComments = null;
+    this._api = api;
 
     this._filmСomponent = null;
     this._filmDetailsComponent = null;
-    this._comments = [];
+
     this._mode = Mode.DEFAULT;
 
     this._handleOpenPopUpClick = this._handleOpenPopUpClick.bind(this);
@@ -38,13 +40,18 @@ export default class Film {
 
     this._film = film;
 
+    this._api.getComments(film.id)
+      .then((data) => {
+        this._filmComments = data.slice();
+
+      });
+
+
     const prevFilmComponent = this._filmComponent;
     const prevFilmDetailsComponent = this._filmDetailsComponent;
 
-
-    this._filmComponent = new FilmView(film, this._comments);
-    this._filmDetailsComponent = new PopUpView(film, this._comments);
-
+    this._filmComponent = new FilmView(film);
+    this._filmDetailsComponent = new PopUpView(film, this._filmComments);
 
     this._filmComponent.setOpenPopUpClickkHandler(this._handleOpenPopUpClick);
     this._filmDetailsComponent.setClosePopUpClickHandler(this._handleClosePopUpClick);
@@ -87,13 +94,18 @@ export default class Film {
   }
 
   _openPopup() {
+    this._filmDetailsComponent.setFilmComments(this._filmComments);
+    this._changeMode();
+
+    this._filmDetailsComponent.updateElement();
+
     document.querySelector(`body`).classList.add(`hide-overflow`);
     this._filmListContainerComponent.getElement().appendChild(this._filmDetailsComponent.getElement());
     this._filmDetailsComponent.setClosePopUpClickHandler(this._handleClosePopUpClick);
+
     document.addEventListener(`keydown`, this._onEscKeyDown);
     document.addEventListener(`keydown`, this._handleEnterKeyDown);
 
-    this._changeMode();
     this._mode = Mode.OPEN;
   }
 
@@ -171,7 +183,9 @@ export default class Film {
   }
 
   _handleDeleteButtonClick(commentId) {
-    const newComments = this._film.comments.filter((comment) => comment.id !== commentId);
+    const newComments = this._film.comments.filter((comment) => comment !== commentId);
+    this._filmComments = this._filmComments.filter((comment) => comment.id !== commentId);
+
     this._changeData(
         UserAction.DELETE_COMMENT,
         UpdateType.MINOR,
@@ -180,6 +194,9 @@ export default class Film {
             this._film,
             {
               comments: newComments
+            },
+            {
+              deletedIdComment: commentId
             }
         )
     );
@@ -194,14 +211,13 @@ export default class Film {
       if (choosenEmoji && messageUser) {
         const userComment = {
           id: generateId(),
-          emoji: choosenEmoji,
-          text: messageUser,
-          author: `Anonim`,
+          emotion: choosenEmoji,
+          comment: messageUser,
           date: new Date(),
         };
 
-        const newComments = this._film.comments.slice();
-        newComments.push(userComment);
+        this._filmComments.push(userComment);
+
         this._changeData(
             UserAction.ADD_COMMENT,
             UpdateType.MINOR,
@@ -209,7 +225,7 @@ export default class Film {
                 {},
                 this._film,
                 {
-                  comments: newComments
+                  newComment: userComment
                 }
             )
         );
