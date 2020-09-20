@@ -6,7 +6,7 @@ export default class Movies extends Observer {
     super();
     this._films = [];
   }
-// ?
+
   setFilms(updateType, films) {
     this._films = films.slice();
 
@@ -35,6 +35,7 @@ export default class Movies extends Observer {
   }
 
   static adaptToClient(film) {
+
     return Object.assign({}, film, {
 
       title: film.film_info.title,
@@ -46,17 +47,15 @@ export default class Movies extends Observer {
       actors: film.film_info.actors,
       country: film.film_info.release.release_country,
       age: film.film_info.age_rating,
-      year: film.film_info.release.date,
+      year: new Date(film.film_info.release.date),
       runtime: film.film_info.runtime,
       genres: film.film_info.genre,
       description: film.film_info.description,
       comments: film.comments,
       isWatchlist: film.user_details.watchlist,
       isWatched: film.user_details.already_watched,
-      isFavorites: film.user_details.favorite
-      // watchingDate: film.user_details.watching_date !== null ? new Date(film.user_details.watching_date) : film.user_details.watching_date,
-
-
+      isFavorites: film.user_details.favorite,
+      watchingDate: film.user_details.watching_date !== null ? new Date(film.user_details.watching_date) : film.user_details.watching_date,
     });
   }
 
@@ -83,7 +82,8 @@ export default class Movies extends Observer {
         "already_watched": film.isWatched,
         "watchlist": film.isWatchlist,
         "favorite": film.isFavorites,
-        // "watching_date": film.status.watchingDate instanceof Date ? film.status.watchingDate.toISOString() : null,
+        "watching_date": film.watchingDate instanceof Date ? film.watchingDate.toISOString() : null,
+
       }
     });
   }

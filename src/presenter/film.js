@@ -39,12 +39,10 @@ export default class Film {
   init(film) {
 
     this._film = film;
-    // this._filmId = film.id;
 
     this._api.getComments(film.id)
       .then((data) => {
         this._filmComments = data.slice();
-        console.log(this._filmComments);
 
       });
 
@@ -53,10 +51,7 @@ export default class Film {
     const prevFilmDetailsComponent = this._filmDetailsComponent;
 
     this._filmComponent = new FilmView(film);
-    console.log(this._filmComments);
     this._filmDetailsComponent = new PopUpView(film, this._filmComments);
-
-    // this._filmDetailsComponent.setFilmComments(this._filmComments);
 
     this._filmComponent.setOpenPopUpClickkHandler(this._handleOpenPopUpClick);
     this._filmDetailsComponent.setClosePopUpClickHandler(this._handleClosePopUpClick);
@@ -71,8 +66,6 @@ export default class Film {
 
     this._filmDetailsComponent.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
     this._filmDetailsComponent.setEnterKeyDown(this._handleEnterKeyDown);
-    // this._filmDetailsComponent.setFilmComments(this._filmComments);
-
 
 
     if (prevFilmComponent === null || prevFilmDetailsComponent === null) {
@@ -101,25 +94,18 @@ export default class Film {
   }
 
   _openPopup() {
-    console.log(`show`, this._filmComments);
     this._filmDetailsComponent.setFilmComments(this._filmComments);
     this._changeMode();
 
     this._filmDetailsComponent.updateElement();
 
-
-
     document.querySelector(`body`).classList.add(`hide-overflow`);
     this._filmListContainerComponent.getElement().appendChild(this._filmDetailsComponent.getElement());
     this._filmDetailsComponent.setClosePopUpClickHandler(this._handleClosePopUpClick);
-    // this._filmDetailsComponent.setFilmComments(this._filmComments);
-    // this._changeMode();
+
     document.addEventListener(`keydown`, this._onEscKeyDown);
     document.addEventListener(`keydown`, this._handleEnterKeyDown);
 
-    // this._filmDetailsComponent.setFilmComments(this._filmComments);
-
-    // this._changeMode();
     this._mode = Mode.OPEN;
   }
 
@@ -227,7 +213,6 @@ export default class Film {
           id: generateId(),
           emotion: choosenEmoji,
           comment: messageUser,
-          // author: `Anonim`,
           date: new Date(),
         };
 

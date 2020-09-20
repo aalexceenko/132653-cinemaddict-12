@@ -9,13 +9,13 @@ import Api from "./api.js";
 import {UpdateType} from "./const.js";
 
 
-// const FILM_COUNT = 6;
 const AUTHORIZATION = `Basic eo1w590ik29889e`;
 const END_POINT = `https://12.ecmascript.pages.academy/cinemaddict`;
 
 
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
+const footerStatistisaContainer = document.querySelector(`.footer__statistics`);
 
 const api = new Api(END_POINT, AUTHORIZATION);
 
@@ -30,16 +30,11 @@ filterPresenter.init();
 filmContainerPresenter.init();
 
 
-const footerStatistisaContainer = document.querySelector(`.footer__statistics`);
-// render(footerStatistisaContainer, new StatisticsView(films), RenderPosition.BEFOREEND);
-
 api.getFilms()
   .then((films) => {
-    console.log(films);
+
     moviesModel.setFilms(UpdateType.INIT, films);
     render(siteHeaderElement, new HeaderView(films), RenderPosition.BEFOREEND);
-
-
     render(footerStatistisaContainer, new StatisticsView(films), RenderPosition.BEFOREEND);
 
   });

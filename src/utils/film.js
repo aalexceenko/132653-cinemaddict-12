@@ -20,7 +20,6 @@ export const generateDate = (start, end) => {
 
 
 export const sortFilmDown = (filmA, filmB) => {
-
   return filmB.year.getFullYear() - filmA.year.getFullYear();
 };
 

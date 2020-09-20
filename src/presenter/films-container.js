@@ -29,7 +29,6 @@ export default class MovieList {
     this._api = api;
 
 
-
     this._sortComponent = null;
     this._showMoreButtonComponent = null;
 
@@ -106,20 +105,19 @@ export default class MovieList {
 
     switch (actionType) {
       case UserAction.UPDATE_FILM:
-        // this._moviesModel.updateFilm(updateType, update);
+
         this._api.updateFilm(update).then((response) => {
           this._moviesModel.updateFilm(updateType, response);
         });
         break;
       case UserAction.DELETE_COMMENT:
-        // this._moviesModel.updateFilm(updateType, update);
-        console.log(update);
+
         this._api.deleteComment(update.deletedIdComment).then(() => {
           this._moviesModel.updateFilm(updateType, update);
         });
         break;
       case UserAction.ADD_COMMENT:
-        // this._moviesModel.updateFilm(updateType, update);
+
         this._api.addComment(update).then((response) => {
           this._moviesModel.updateFilm(updateType, response);
         });

@@ -32,7 +32,6 @@ export default class Api {
   }
 
   deleteComment(commentId) {
-    // console.log(film);
     return this._load({url: `comments/${commentId}`, method: Method.DELETE});
   }
 
@@ -44,7 +43,6 @@ export default class Api {
         comment: film.newComment.comment,
         date: film.newComment.date instanceof Date ? film.newComment.date.toISOString() : null,
         emotion: film.newComment.emotion,
-        // author: film.newComment.author
       }),
       headers: new Headers({"Content-Type": `application/json`})
     }).then(Api.toJSON)
@@ -52,6 +50,7 @@ export default class Api {
   }
 
   updateFilm(film) {
+
     return this._load({
       url: `movies/${film.id}`,
       method: Method.PUT,

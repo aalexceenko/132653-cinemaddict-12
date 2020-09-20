@@ -17,7 +17,6 @@ const createGenresTemplate = (genres) => {
 
 const createCommentsListTemplate = (comments) => {
   if (comments) {
-    console.log(comments);
 
     return comments.map(({id, emotion, comment, author, date}) => `<li class="film-details__comment" data-comment-id="${id}">
       <span class="film-details__comment-emoji">
@@ -52,13 +51,7 @@ const createFilmDetailsTemplate = (film, emoji, message, filmsComments) => {
 
   const {title, year, origanalTitle, writer, director, age, actors, country, poster, rating, comments, runtime, description, isFavorites, isWatched, isWatchlist, genres} = film;
 
-  // let commentsForFilm = [];
-  console.log(filmsComments);
-
   const commentsListTemplate = createCommentsListTemplate(filmsComments);
-  console.log(commentsListTemplate);
-
-
   const emojiList = createEmojiList();
   const genresTemplate = createGenresTemplate(genres);
   const date = getDayMonthYearFromDate(year);
@@ -173,8 +166,7 @@ const createFilmDetailsTemplate = (film, emoji, message, filmsComments) => {
 
 export default class PopUp extends SmarttView {
   constructor(film, comments) {
-    console.log(film);
-    console.log(comments);
+
     super();
 
     this._filmsComments = comments;
