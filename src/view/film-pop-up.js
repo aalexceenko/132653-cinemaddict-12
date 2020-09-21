@@ -205,8 +205,6 @@ export default class PopUp extends SmarttView {
     this.setFavoriteClickHandler(this._callback.favoriteClick);
     this.setDeleteButtonClickHandler(this._callback.deleteButtonClick);
     this.setClosePopUpClickHandler(this._callback.closePopup);
-    this.setEnterKeyDown(this._callback.enterKeyDown);
-
   }
 
   _commentInputHandler(evt) {
@@ -219,9 +217,6 @@ export default class PopUp extends SmarttView {
     return createFilmDetailsTemplate(this._film, this._emoji, this._message, this._filmsComments);
   }
 
-  setEnterKeyDown(callback) {
-    this._callback.enterKeyDown = callback;
-  }
 
   _closePopUpClickHandler(evt) {
     evt.preventDefault();
@@ -273,8 +268,21 @@ export default class PopUp extends SmarttView {
   }
 
   _deleteButtonClickHandler(evt) {
+
+    const commentElement = evt.target.closest(`.film-details__comment`);
     evt.preventDefault();
-    this._callback.deleteButtonClick(evt.target.dataset.commentId);
+
+    if (commentElement.classList.contains(`shake`)) {
+      commentElement.classList.remove(`shake`);
+    }
+    evt.target.textContent = `Deleting`;
+    evt.target.disabled = true;
+
+    this._callback.deleteButtonClick(evt.target.dataset.commentId, () => {
+      commentElement.classList.add(`shake`);
+      evt.target.textContent = `Delete`;
+      evt.target.disabled = false;
+    });
   }
 
   _emojiClickHandler(evt) {
@@ -302,6 +310,16 @@ export default class PopUp extends SmarttView {
 
   setFilmComments(comments) {
     this._filmsComments = comments;
+  }
+
+  disableForm() {
+    this.getElement()
+      .querySelector(`.film-details__comment-input`)
+      .disabled = true;
+  }
+
+  addShake() {
+    this.getElement().querySelector(`.film-details__new-comment`).classList.add(`shake`);
   }
 
 }

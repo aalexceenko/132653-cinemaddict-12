@@ -40,51 +40,52 @@ export default class Film {
 
     this._film = film;
 
-    this._api.getComments(film.id)
-      .then((data) => {
-        this._filmComments = data.slice();
-
-      });
-
-
     const prevFilmComponent = this._filmComponent;
     const prevFilmDetailsComponent = this._filmDetailsComponent;
 
     this._filmComponent = new FilmView(film);
-    this._filmDetailsComponent = new PopUpView(film, this._filmComments);
 
     this._filmComponent.setOpenPopUpClickkHandler(this._handleOpenPopUpClick);
-    this._filmDetailsComponent.setClosePopUpClickHandler(this._handleClosePopUpClick);
 
     this._filmComponent.setWatchListClickHandler(this._handleWatchListClick);
     this._filmComponent.setWatchedClickHandler(this._handleWatchedClick);
     this._filmComponent.setFavoriteClickHandler(this._handleFavoriteClick);
 
-    this._filmDetailsComponent.setWatchListClickHandler(this._handleWatchListClick);
-    this._filmDetailsComponent.setWatchedClickHandler(this._handleWatchedClick);
-    this._filmDetailsComponent.setFavoriteClickHandler(this._handleFavoriteClick);
+    this._api.getComments(film.id)
+      .then((data) => {
+        this._filmComments = data.slice();
 
-    this._filmDetailsComponent.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
-    this._filmDetailsComponent.setEnterKeyDown(this._handleEnterKeyDown);
+        this._filmDetailsComponent = new PopUpView(film, this._filmComments);
 
 
-    if (prevFilmComponent === null || prevFilmDetailsComponent === null) {
-      render(this._filmListContainerComponent, this._filmComponent, RenderPosition.BEFOREEND);
-      return;
-    }
+        this._filmDetailsComponent.setClosePopUpClickHandler(this._handleClosePopUpClick);
 
-    if (this._filmListContainerComponent.getElement().contains(prevFilmComponent.getElement())) {
-      replace(prevFilmComponent, this._filmComponent);
+        this._filmDetailsComponent.setWatchListClickHandler(this._handleWatchListClick);
+        this._filmDetailsComponent.setWatchedClickHandler(this._handleWatchedClick);
+        this._filmDetailsComponent.setFavoriteClickHandler(this._handleFavoriteClick);
 
-    }
+        this._filmDetailsComponent.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
 
-    if (this._filmListContainerComponent.getElement().contains(prevFilmDetailsComponent.getElement())) {
-      replace(prevFilmDetailsComponent, this._filmDetailsComponent);
 
-    }
+        if (prevFilmComponent === null || prevFilmDetailsComponent === null) {
+          render(this._filmListContainerComponent, this._filmComponent, RenderPosition.BEFOREEND);
+          return;
+        }
 
-    remove(prevFilmComponent);
-    remove(prevFilmDetailsComponent);
+        if (this._filmListContainerComponent.getElement().contains(prevFilmComponent.getElement())) {
+          replace(prevFilmComponent, this._filmComponent);
+
+        }
+
+        if (this._filmListContainerComponent.getElement().contains(prevFilmDetailsComponent.getElement())) {
+          replace(prevFilmDetailsComponent, this._filmDetailsComponent);
+
+        }
+
+        remove(prevFilmComponent);
+        remove(prevFilmDetailsComponent);
+      });
+
 
   }
 
@@ -182,7 +183,7 @@ export default class Film {
     );
   }
 
-  _handleDeleteButtonClick(commentId) {
+  _handleDeleteButtonClick(commentId, callback) {
     const newComments = this._film.comments.filter((comment) => comment !== commentId);
     this._filmComments = this._filmComments.filter((comment) => comment.id !== commentId);
 
@@ -198,7 +199,8 @@ export default class Film {
             {
               deletedIdComment: commentId
             }
-        )
+        ),
+        callback
     );
   }
 
@@ -209,14 +211,14 @@ export default class Film {
       const messageUser = this._filmDetailsComponent.returnUserMessage();
 
       if (choosenEmoji && messageUser) {
+        this._filmDetailsComponent.disableForm();
+
         const userComment = {
           id: generateId(),
           emotion: choosenEmoji,
           comment: messageUser,
           date: new Date(),
         };
-
-        this._filmComments.push(userComment);
 
         this._changeData(
             UserAction.ADD_COMMENT,
@@ -227,7 +229,10 @@ export default class Film {
                 {
                   newComment: userComment
                 }
-            )
+            ),
+            () => {
+              this._filmDetailsComponent.addShake();
+            }
         );
       }
     }
