@@ -47,6 +47,8 @@ export default class MovieList {
     this._handleViewAction = this._handleViewAction.bind(this);
     this._handleModelEvent = this._handleModelEvent.bind(this);
 
+    this._inited = false;
+
   }
 
   init() {
@@ -55,6 +57,9 @@ export default class MovieList {
 
     this._moviesModel.addObserver(this._handleModelEvent);
     this._filterModel.addObserver(this._handleModelEvent);
+
+
+    this._inited = true;
   }
 
   destroy() {
@@ -68,6 +73,7 @@ export default class MovieList {
     this._moviesModel.removeObserver(this._handleModelEvent);
     this._filterModel.removeObserver(this._handleModelEvent);
 
+    this._inited = false;
   }
 
   _getFilms() {
@@ -163,6 +169,13 @@ export default class MovieList {
         break;
     }
   }
+
+  isInited() {
+
+    return this._inited;
+
+  }
+
 
   _clearBoard({resetRenderedFilmCount = false, resetSortType = false} = {}) {
     const filmCount = this._getFilms().length;
@@ -265,16 +278,16 @@ export default class MovieList {
     const films = this._getFilms();
     const filmCount = films.length;
 
-    if (filmCount === 0) {
-      this._renderNoFilms();
-      return;
-    }
-
     this._renderSort();
 
     render(this._filmsContainer, this._filmsContainerComponent, RenderPosition.BEFOREEND);
     render(this._filmsContainerComponent, this._filmListComponent, RenderPosition.BEFOREEND);
     render(this._filmListComponent, this._filmListContainerComponent, RenderPosition.BEFOREEND);
+
+    if (filmCount === 0) {
+      this._renderNoFilms();
+      return;
+    }
 
     this._renderFilms(films.slice(0, Math.min(filmCount, this._renderedFilmCount)));
 

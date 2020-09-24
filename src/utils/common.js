@@ -23,13 +23,13 @@ export const getRandomArrayItem = (arr) => {
   return arr[randomIndex];
 };
 
-export const getRandomArrayItems = function (info) {
+export const getRandomArrayItems = function (arr) {
 
-  if (info.length === 0) {
+  if (arr.length === 0) {
     return undefined;
   }
 
-  const restInformation = info.slice();
+  const restInformation = arr.slice();
   const countInformation = getRandomInteger(1, restInformation.length);
   let newArray = [];
   for (let i = 0; i < countInformation; i++) {

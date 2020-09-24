@@ -37,9 +37,11 @@ const handleMenuTypeChange = (menuItem) => {
 
   switch (menuItem) {
     case MenuItem.FILMS:
-      remove(statisticsComponent);
-      filmContainerPresenter.destroy();
-      filmContainerPresenter.init();
+      if (!filmContainerPresenter.isInited()) {
+        remove(statisticsComponent);
+        filmContainerPresenter.destroy();
+        filmContainerPresenter.init();
+      }
 
       break;
     case MenuItem.STATS:
@@ -51,6 +53,7 @@ const handleMenuTypeChange = (menuItem) => {
       break;
   }
 };
+
 
 navigationComponent.setMenuTypeChangeHandler(handleMenuTypeChange);
 
