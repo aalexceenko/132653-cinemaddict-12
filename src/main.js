@@ -1,8 +1,10 @@
 import HeaderView from "./view/header.js";
-import StatisticsView from "./view/statistic.js";
+import StatisticUserView from "./view/statistic.js";
 import NavigationView from './view/navigation.js';
+import StatisticsFilmView from "./view/stats.js";
 
-import {render, RenderPosition} from "./utils/render.js";
+
+import {render, RenderPosition, remove} from "./utils/render.js";
 import MovieListPresenter from "./presenter/films-container.js";
 import MoviesModel from './model/movies.js';
 import FilterModel from './model/filter.js';
@@ -29,22 +31,21 @@ const navigationComponent = new NavigationView();
 const filmContainerPresenter = new MovieListPresenter(siteMainElement, moviesModel, filterModel, api);
 const filterPresenter = new FilterPresenter(siteMainElement, filterModel, moviesModel, navigationComponent);
 
-console.log(navigationComponent.getElement());
-
+let statisticsComponent = null;
 
 const handleMenuTypeChange = (menuItem) => {
-  console.log(menuItem);
-   // Сбросить активный пункт меню
 
   switch (menuItem) {
     case MenuItem.FILMS:
-      // Скрыть статистику
-      // Показать панель фильмов
+      remove(statisticsComponent);
+      filmContainerPresenter.init();
+
       break;
     case MenuItem.STATS:
-      // Поставить активный пункт меню
-      // Скрыть панель фильмов
-      // Показать статистику
+      filmContainerPresenter.destroy();
+      statisticsComponent = new StatisticsFilmView(moviesModel.getFilms());
+      render(siteMainElement, statisticsComponent, RenderPosition.BEFOREEND);
+
       break;
   }
 };
@@ -54,10 +55,6 @@ filterPresenter.init();
 filmContainerPresenter.init();
 
 navigationComponent.setMenuTypeChangeHandler(handleMenuTypeChange);
-// filterPresenter.setMenuTypeChangeHandler(handleMenuTypeChange);
-
-// const siteNavElement = document.querySelector(`.main-navigation`);
-
 
 
 api.getFilms()
@@ -67,7 +64,7 @@ api.getFilms()
     render(siteHeaderElement, new HeaderView(films), RenderPosition.BEFOREEND);
     render(siteMainElement, navigationComponent, RenderPosition.AFTERBEGIN);
 
-    render(footerStatistisaContainer, new StatisticsView(films), RenderPosition.BEFOREEND);
+    render(footerStatistisaContainer, new StatisticUserView(films), RenderPosition.BEFOREEND);
 
   });
 

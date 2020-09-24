@@ -1,6 +1,6 @@
 import {getUpperCaseLetter} from "../utils/common.js";
 import AbstractView from "./abstract.js";
-import {FilterType, MenuItem} from '../const.js';
+import {FilterType} from '../const.js';
 
 
 const createFilterItemTemplate = (filter, currentFilterType) => {
@@ -42,7 +42,6 @@ export default class Filter extends AbstractView {
     this._currentFilter = currentFilterType;
 
     this._filterTypeChangeHandler = this._filterTypeChangeHandler.bind(this);
-    // this._menuTypeChangeHandler = this._menuTypeChangeHandler.bind(this);
 
   }
 
@@ -62,21 +61,4 @@ export default class Filter extends AbstractView {
       .forEach((element) => element.addEventListener(`click`, this._filterTypeChangeHandler));
   }
 
-  // _menuTypeChangeHandler(evt) {
-  //   evt.preventDefault();
-  //   this._callback.menuClick(evt.target.dataset.page);
-  // }
-
-  // setMenuTypeChangeHandler(callback) {
-  //   this._callback.menuClick = callback;
-  //   this.getElement().addEventListener(`click`, this._menuTypeChangeHandler);
-  // }
-
-  // setActiveMenuItem(menuItem) {
-
-  //   if (menuItem === MenuItem.STATS) {
-  //     this.getElement().querySelector(`[data-page="STATS"]`).classList.add(`main-navigation__item--active`);
-  //   }
-
-  // }
 }

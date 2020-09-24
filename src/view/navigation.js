@@ -1,4 +1,3 @@
-// import {getUpperCaseLetter} from "../utils/common.js";
 import AbstractView from "./abstract.js";
 import {MenuItem} from '../const.js';
 

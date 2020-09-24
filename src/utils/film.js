@@ -35,3 +35,36 @@ export const sortFilmRating = (filmA, filmB) => {
 
   return 0;
 };
+
+export const countFilmsDuration = (counter, film) => {
+  return counter + film.runtime;
+};
+
+export const getUserRank = (count) => {
+  if (count === 0) {
+    return ``;
+  } else if (count >= 1 && count <= 10) {
+    return `novice`;
+  } else if (count >= 11 && count <= 20) {
+    return `fan`;
+  } else {
+    return `movie buff`;
+  }
+
+  // switch (count) {
+  //   case (count === 0):
+  //     return ``;
+
+
+  //   case (count >= 1 && count <= 10):
+  //     return `novice`;
+
+
+  //   case (count >= 11 && count <= 20):
+  //     return `fan`;
+
+  //   case (count > 20):
+  //     return `movie buff`;
+
+  // }
+};

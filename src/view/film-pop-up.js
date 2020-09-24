@@ -2,7 +2,7 @@ import he from 'he';
 
 import {EMOJIS} from "../const.js";
 import {getDuration, getDayMonthYearFromDate, getDateCommentFormat} from "../utils/film.js";
-import SmarttView from "./smart.js";
+import SmartView from "./smart.js";
 
 
 const createGenresTemplate = (genres) => {
@@ -164,7 +164,7 @@ const createFilmDetailsTemplate = (film, emoji, message, filmsComments) => {
   );
 };
 
-export default class PopUp extends SmarttView {
+export default class PopUp extends SmartView {
   constructor(film, comments) {
 
     super();
