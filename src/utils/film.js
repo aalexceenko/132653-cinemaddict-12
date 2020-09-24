@@ -50,21 +50,4 @@ export const getUserRank = (count) => {
   } else {
     return `movie buff`;
   }
-
-  // switch (count) {
-  //   case (count === 0):
-  //     return ``;
-
-
-  //   case (count >= 1 && count <= 10):
-  //     return `novice`;
-
-
-  //   case (count >= 11 && count <= 20):
-  //     return `fan`;
-
-  //   case (count > 20):
-  //     return `movie buff`;
-
-  // }
 };

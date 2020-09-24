@@ -31,18 +31,20 @@ const navigationComponent = new NavigationView();
 const filmContainerPresenter = new MovieListPresenter(siteMainElement, moviesModel, filterModel, api);
 const filterPresenter = new FilterPresenter(siteMainElement, filterModel, moviesModel, navigationComponent);
 
-let statisticsComponent = null;
+let statisticsComponent = new StatisticsFilmView(moviesModel.getFilms());
 
 const handleMenuTypeChange = (menuItem) => {
 
   switch (menuItem) {
     case MenuItem.FILMS:
       remove(statisticsComponent);
+      filmContainerPresenter.destroy();
       filmContainerPresenter.init();
 
       break;
     case MenuItem.STATS:
       filmContainerPresenter.destroy();
+      remove(statisticsComponent);
       statisticsComponent = new StatisticsFilmView(moviesModel.getFilms());
       render(siteMainElement, statisticsComponent, RenderPosition.BEFOREEND);
 
@@ -50,11 +52,11 @@ const handleMenuTypeChange = (menuItem) => {
   }
 };
 
+navigationComponent.setMenuTypeChangeHandler(handleMenuTypeChange);
+
 
 filterPresenter.init();
 filmContainerPresenter.init();
-
-navigationComponent.setMenuTypeChangeHandler(handleMenuTypeChange);
 
 
 api.getFilms()

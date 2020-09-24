@@ -1,6 +1,4 @@
 import FilterView from "../view/filter.js";
-// import NavigationView from "../view/navigation.js";
-
 import {render, RenderPosition, replace, remove} from "../utils/render.js";
 import {filter} from "../utils/filter.js";
 import {FilterType, UpdateType} from "../const.js";
@@ -37,7 +35,6 @@ export default class Filter {
 
 
     if (prevFilterComponent === null) {
-      // render(this._filterContainer, this._filterComponent, RenderPosition.BEFOREEND);
       render(this._navigationComponent, this._filterComponent, RenderPosition.AFTERBEGIN);
 
       return;

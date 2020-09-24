@@ -47,10 +47,6 @@ export default class MovieList {
     this._handleViewAction = this._handleViewAction.bind(this);
     this._handleModelEvent = this._handleModelEvent.bind(this);
 
-    // this._moviesModel.addObserver(this._handleModelEvent);
-    // this._filterModel.addObserver(this._handleModelEvent);
-
-
   }
 
   init() {
@@ -62,7 +58,7 @@ export default class MovieList {
   }
 
   destroy() {
-    this._clearBoard({resetRenderedTaskCount: true, resetSortType: true});
+    this._clearBoard({resetRenderedFilmCount: true, resetSortType: true});
 
     remove(this._filmsContainerComponent);
     remove(this._filmListComponent);
@@ -99,7 +95,7 @@ export default class MovieList {
 
     this._currentSortType = sortType;
 
-    this._clearBoard({resetRenderedTaskCount: true});
+    this._clearBoard({resetRenderedFilmCount: true});
     this._renderBoard();
   }
 
@@ -157,7 +153,7 @@ export default class MovieList {
         this._filmPresenter[data.id].init(data);
         break;
       case UpdateType.MAJOR:
-        this._clearBoard({resetRenderedTaskCount: true, resetSortType: true});
+        this._clearBoard({resetRenderedFilmCount: true, resetSortType: true});
         this._renderBoard();
         break;
       case UpdateType.INIT:
@@ -168,7 +164,7 @@ export default class MovieList {
     }
   }
 
-  _clearBoard({resetRenderedTaskCount = false, resetSortType = false} = {}) {
+  _clearBoard({resetRenderedFilmCount = false, resetSortType = false} = {}) {
     const filmCount = this._getFilms().length;
 
     Object
@@ -182,7 +178,7 @@ export default class MovieList {
     remove(this._loadingComponent);
 
 
-    if (resetRenderedTaskCount) {
+    if (resetRenderedFilmCount) {
       this._renderedFilmCount = FILM_COUNT_PER_STEP;
     } else {
       this._renderedFilmCount = Math.min(filmCount, this._renderedFilmCount);
