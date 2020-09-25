@@ -1,16 +1,6 @@
 import AbstractView from "./abstract.js";
+import {getUserRank} from "../utils/film.js";
 
-const getUserRank = (count) => {
-  if (count === 0) {
-    return ``;
-  } else if (count >= 1 && count <= 10) {
-    return `novice`;
-  } else if (count >= 11 && count <= 20) {
-    return `fan`;
-  } else {
-    return `movie buff`;
-  }
-};
 
 const createHeaderProfileTemplate = (films) => {
 

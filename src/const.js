@@ -26,3 +26,16 @@ export const FilterType = {
   FAVORITES: `favorites`,
 };
 
+export const MenuItem = {
+  FILMS: `FILMS`,
+  STATS: `STATS`,
+};
+
+export const StatisticFilterType = {
+  ALL_TIME: `all-time`,
+  TODAY: `today`,
+  WEEK: `week`,
+  MONTH: `month`,
+  YEAR: `year`
+};
+
