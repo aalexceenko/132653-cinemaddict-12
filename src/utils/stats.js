@@ -1,6 +1,5 @@
 import moment from "moment";
-
-import {getUniqueArray} from "../utils/common.js";
+import {getUniqueArray} from "./common.js";
 
 export const countFilmsByGenre = (films, genre) => {
   return films.filter((film) => new Set(film.genres).has(genre)).length;

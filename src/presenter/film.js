@@ -4,12 +4,10 @@ import {render, RenderPosition, remove, replace} from "../utils/render.js";
 import {generateId} from "../utils/common.js";
 import {UserAction, UpdateType} from '../const.js';
 
-
 const Mode = {
   DEFAULT: `DEFAULT`,
   OPEN_POPUP: `OPEN_POPUP`
 };
-
 
 export default class Film {
   constructor(filmListContainerComponent, changeDate, changeMode, api) {
@@ -19,7 +17,6 @@ export default class Film {
     this._filmComments = null;
     this._api = api;
 
-    this._filmСomponent = null;
     this._filmDetailsComponent = null;
 
     this._mode = Mode.DEFAULT;
@@ -37,7 +34,6 @@ export default class Film {
   }
 
   init(film) {
-
     this._film = film;
 
     const prevFilmComponent = this._filmComponent;
@@ -57,7 +53,6 @@ export default class Film {
 
         this._filmDetailsComponent = new PopUpView(film, this._filmComments);
 
-
         this._filmDetailsComponent.setClosePopUpClickHandler(this._handleClosePopUpClick);
 
         this._filmDetailsComponent.setWatchListClickHandler(this._handleWatchListClick);
@@ -66,7 +61,6 @@ export default class Film {
 
         this._filmDetailsComponent.setDeleteButtonClickHandler(this._handleDeleteButtonClick);
 
-
         if (prevFilmComponent === null || prevFilmDetailsComponent === null) {
           render(this._filmListContainerComponent, this._filmComponent, RenderPosition.BEFOREEND);
           return;
@@ -74,19 +68,15 @@ export default class Film {
 
         if (this._filmListContainerComponent.getElement().contains(prevFilmComponent.getElement())) {
           replace(prevFilmComponent, this._filmComponent);
-
         }
 
         if (this._filmListContainerComponent.getElement().contains(prevFilmDetailsComponent.getElement())) {
           replace(prevFilmDetailsComponent, this._filmDetailsComponent);
-
         }
 
         remove(prevFilmComponent);
         remove(prevFilmDetailsComponent);
       });
-
-
   }
 
   destroy() {
@@ -125,7 +115,6 @@ export default class Film {
     if (evt.key === `Escape` || evt.key === `Esc`) {
       evt.preventDefault();
       this._closePopup();
-
       this._filmDetailsComponent.reset(this._film);
     }
   }
@@ -139,14 +128,12 @@ export default class Film {
   }
 
   _handleWatchListClick() {
-
     this._changeData(
         UserAction.UPDATE_FILM,
         UpdateType.MINOR,
         Object.assign(
             {},
             this._film,
-
             {
               isWatchlist: !this._film.isWatchlist
             }
@@ -155,7 +142,6 @@ export default class Film {
   }
 
   _handleWatchedClick() {
-
     this._changeData(
         UserAction.UPDATE_FILM,
         UpdateType.MINOR,
@@ -205,17 +191,16 @@ export default class Film {
   }
 
   _handleEnterKeyDown(evt) {
-
     if ((evt.ctrlKey || evt.metaKey) && (evt.key === `Enter`)) {
-      const choosenEmoji = this._filmDetailsComponent.returnSelectedEmojiType();
+      const chosenEmoji = this._filmDetailsComponent.returnSelectedEmojiType();
       const messageUser = this._filmDetailsComponent.returnUserMessage();
 
-      if (choosenEmoji && messageUser) {
+      if (chosenEmoji && messageUser) {
         this._filmDetailsComponent.disableForm();
 
         const userComment = {
           id: generateId(),
-          emotion: choosenEmoji,
+          emotion: chosenEmoji,
           comment: messageUser,
           date: new Date(),
         };
@@ -244,5 +229,4 @@ export default class Film {
       document.querySelector(`body`).classList.add(`hide-overflow`);
     }
   }
-
 }

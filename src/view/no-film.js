@@ -5,9 +5,7 @@ const createNoFilmTemplate = () => {
 };
 
 export default class NoFilm extends AbstractView {
-
   getTemplate() {
     return createNoFilmTemplate();
   }
-
 }

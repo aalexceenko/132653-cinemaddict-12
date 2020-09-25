@@ -6,7 +6,6 @@ export const RenderPosition = {
 };
 
 export const render = (container, child, place) => {
-
   if (container instanceof Abstract) {
     container = container.getElement();
   }
@@ -23,10 +22,6 @@ export const render = (container, child, place) => {
       container.append(child);
       break;
   }
-};
-
-export const renderTemplate = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
 };
 
 export const createElement = (template) => {

@@ -5,40 +5,6 @@ export const getRandomInteger = (a = 0, b = 1) => {
   return Math.floor(lower + Math.random() * (upper - lower + 1));
 };
 
-export const getRandomFloat = (a = 1, b = 0) => {
-  const lower = Math.min(a, b);
-  const upper = Math.max(a, b);
-
-  return (lower + Math.random() * (upper - lower)).toFixed(1);
-};
-
-
-export const getRandomArrayItem = (arr) => {
-  if (arr.length === 0) {
-    return undefined;
-  }
-
-  const randomIndex = getRandomInteger(0, arr.length - 1);
-
-  return arr[randomIndex];
-};
-
-export const getRandomArrayItems = function (arr) {
-
-  if (arr.length === 0) {
-    return undefined;
-  }
-
-  const restInformation = arr.slice();
-  const countInformation = getRandomInteger(1, restInformation.length);
-  let newArray = [];
-  for (let i = 0; i < countInformation; i++) {
-    newArray.push(restInformation.splice(getRandomInteger(0, restInformation.length - 1), 1));
-  }
-
-  return newArray;
-};
-
 export const getUpperCaseLetter = (str) => {
   return str[0].toUpperCase() + str.slice(1);
 };

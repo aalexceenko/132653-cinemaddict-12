@@ -4,7 +4,6 @@ import {CLASS_ITEM_ACTIVE} from "../const.js";
 import AbstractView from "./abstract.js";
 
 const createFilmElementTemplate = (film) => {
-
   const {title, poster, rating, year, runtime, genres, description, comments, isWatchlist, isWatched, isFavorites} = film;
 
   const duration = getDuration(runtime);
@@ -49,9 +48,7 @@ export default class Film extends AbstractView {
   }
 
   getTemplate() {
-
     return createFilmElementTemplate(this._film);
-
   }
 
   _openPopUpClickHandler(evt) {
@@ -63,9 +60,7 @@ export default class Film extends AbstractView {
     this._callback.openPopup = callback;
     this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, this._openPopUpClickHandler);
     this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, this._openPopUpClickHandler);
-
     this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, this._openPopUpClickHandler);
-
   }
 
   _watchListClickHandler(evt) {
@@ -97,6 +92,4 @@ export default class Film extends AbstractView {
     this._callback.favoriteClick = callback;
     this.getElement().querySelector(`.film-card__controls-item--favorite`).addEventListener(`click`, this._favoriteClickHandler);
   }
-
-
 }

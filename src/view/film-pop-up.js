@@ -1,12 +1,9 @@
 import he from 'he';
-
 import {EMOJIS} from "../const.js";
 import {getDuration, getDayMonthYearFromDate, getDateCommentFormat} from "../utils/film.js";
 import SmartView from "./smart.js";
 
-
 const createGenresTemplate = (genres) => {
-
   return (
     `<td class="film-details__term">${genres.length > 1 ? `Genres` : `Genre`}</td>
     <td class="film-details__cell">
@@ -17,7 +14,6 @@ const createGenresTemplate = (genres) => {
 
 const createCommentsListTemplate = (comments) => {
   if (comments) {
-
     return comments.map(({id, emotion, comment, author, date}) => `<li class="film-details__comment" data-comment-id="${id}">
       <span class="film-details__comment-emoji">
         <img src="./images/emoji/${emotion}.png" width="55" height="55" alt="emoji-${emotion}">
@@ -31,7 +27,6 @@ const createCommentsListTemplate = (comments) => {
         </p>
       </div>
     </li>`).join(``);
-
   }
   return false;
 };
@@ -48,8 +43,7 @@ const createEmojiList = () => {
 };
 
 const createFilmDetailsTemplate = (film, emoji, message, filmsComments) => {
-
-  const {title, year, origanalTitle, writer, director, age, actors, country, poster, rating, comments, runtime, description, isFavorites, isWatched, isWatchlist, genres} = film;
+  const {title, year, originalTitel, writer, director, age, actors, country, poster, rating, comments, runtime, description, isFavorites, isWatched, isWatchlist, genres} = film;
 
   const commentsListTemplate = createCommentsListTemplate(filmsComments);
   const emojiList = createEmojiList();
@@ -58,7 +52,6 @@ const createFilmDetailsTemplate = (film, emoji, message, filmsComments) => {
   const duration = getDuration(runtime);
   const writers = writer ? writer.join(`, `) : `N/A`;
   const actorsName = actors ? actors.join(`, `) : `N/A`;
-
 
   return (
     `<section class="film-details">
@@ -78,7 +71,7 @@ const createFilmDetailsTemplate = (film, emoji, message, filmsComments) => {
               <div class="film-details__info-head">
                 <div class="film-details__title-wrap">
                   <h3 class="film-details__title">${title || `N/A`}</h3>
-                  <p class="film-details__title-original">Original: ${origanalTitle || `N/A`}</p>
+                  <p class="film-details__title-original">Original: ${originalTitel || `N/A`}</p>
                 </div>
 
                 <div class="film-details__rating">
@@ -138,8 +131,6 @@ const createFilmDetailsTemplate = (film, emoji, message, filmsComments) => {
           <section class="film-details__comments-wrap">
             <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
 
-
-
             <ul class="film-details__comments-list">
             ${commentsListTemplate}
             </ul>
@@ -166,7 +157,6 @@ const createFilmDetailsTemplate = (film, emoji, message, filmsComments) => {
 
 export default class PopUp extends SmartView {
   constructor(film, comments) {
-
     super();
 
     this._filmsComments = comments;
@@ -185,7 +175,6 @@ export default class PopUp extends SmartView {
     this._commentInputHandler = this._commentInputHandler.bind(this);
     this.returnSelectedEmojiType = this.returnSelectedEmojiType.bind(this);
     this._setInnerHandlers();
-
   }
 
   _setInnerHandlers() {
@@ -217,7 +206,6 @@ export default class PopUp extends SmartView {
     return createFilmDetailsTemplate(this._film, this._emoji, this._message, this._filmsComments);
   }
 
-
   _closePopUpClickHandler(evt) {
     evt.preventDefault();
     this._callback.closePopup();
@@ -226,7 +214,6 @@ export default class PopUp extends SmartView {
   setClosePopUpClickHandler(callback) {
     this._callback.closePopup = callback;
     this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._closePopUpClickHandler);
-
   }
 
   setWatchListClickHandler(callback) {
@@ -268,7 +255,6 @@ export default class PopUp extends SmartView {
   }
 
   _deleteButtonClickHandler(evt) {
-
     const commentElement = evt.target.closest(`.film-details__comment`);
     evt.preventDefault();
 
@@ -286,7 +272,6 @@ export default class PopUp extends SmartView {
   }
 
   _emojiClickHandler(evt) {
-
     this._updateEmoji(evt.target.alt);
     this.updateElement();
   }
@@ -321,5 +306,4 @@ export default class PopUp extends SmartView {
   addShake() {
     this.getElement().querySelector(`.film-details__new-comment`).classList.add(`shake`);
   }
-
 }

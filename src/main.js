@@ -2,25 +2,20 @@ import HeaderView from "./view/header.js";
 import StatisticUserView from "./view/statistic.js";
 import NavigationView from './view/navigation.js';
 import StatisticsFilmView from "./view/stats.js";
-
-
 import {render, RenderPosition, remove} from "./utils/render.js";
-import MovieListPresenter from "./presenter/films-container.js";
+import MovieListPresenter from "./presenter/movie-list.js";
 import MoviesModel from './model/movies.js';
 import FilterModel from './model/filter.js';
 import FilterPresenter from './presenter/filter.js';
 import Api from "./api.js";
 import {UpdateType, MenuItem} from "./const.js";
 
-
 const AUTHORIZATION = `Basic eo1w590ik29889e`;
 const END_POINT = `https://12.ecmascript.pages.academy/cinemaddict`;
 
-
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
-const footerStatistisaContainer = document.querySelector(`.footer__statistics`);
-
+const footerStatisticaContainer = document.querySelector(`.footer__statistics`);
 
 const api = new Api(END_POINT, AUTHORIZATION);
 
@@ -29,12 +24,11 @@ const filterModel = new FilterModel();
 
 const navigationComponent = new NavigationView();
 const filmContainerPresenter = new MovieListPresenter(siteMainElement, moviesModel, filterModel, api);
-const filterPresenter = new FilterPresenter(siteMainElement, filterModel, moviesModel, navigationComponent);
+const filterPresenter = new FilterPresenter(filterModel, moviesModel, navigationComponent);
 
 let statisticsComponent = new StatisticsFilmView(moviesModel.getFilms());
 
 const handleMenuTypeChange = (menuItem) => {
-
   switch (menuItem) {
     case MenuItem.FILMS:
       if (!filmContainerPresenter.isInited()) {
@@ -54,22 +48,16 @@ const handleMenuTypeChange = (menuItem) => {
   }
 };
 
-
 navigationComponent.setMenuTypeChangeHandler(handleMenuTypeChange);
-
 
 filterPresenter.init();
 filmContainerPresenter.init();
 
-
 api.getFilms()
   .then((films) => {
-
     moviesModel.setFilms(UpdateType.INIT, films);
     render(siteHeaderElement, new HeaderView(films), RenderPosition.BEFOREEND);
     render(siteMainElement, navigationComponent, RenderPosition.AFTERBEGIN);
-
-    render(footerStatistisaContainer, new StatisticUserView(films), RenderPosition.BEFOREEND);
-
+    render(footerStatisticaContainer, new StatisticUserView(films), RenderPosition.BEFOREEND);
   });
 
