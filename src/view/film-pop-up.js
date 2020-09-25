@@ -49,7 +49,7 @@ const createEmojiList = () => {
 
 const createFilmDetailsTemplate = (film, emoji, message, filmsComments) => {
 
-  const {title, year, origanalTitle, writer, director, age, actors, country, poster, rating, comments, runtime, description, isFavorites, isWatched, isWatchlist, genres} = film;
+  const {title, year, originalTitel, writer, director, age, actors, country, poster, rating, comments, runtime, description, isFavorites, isWatched, isWatchlist, genres} = film;
 
   const commentsListTemplate = createCommentsListTemplate(filmsComments);
   const emojiList = createEmojiList();
@@ -78,7 +78,7 @@ const createFilmDetailsTemplate = (film, emoji, message, filmsComments) => {
               <div class="film-details__info-head">
                 <div class="film-details__title-wrap">
                   <h3 class="film-details__title">${title || `N/A`}</h3>
-                  <p class="film-details__title-original">Original: ${origanalTitle || `N/A`}</p>
+                  <p class="film-details__title-original">Original: ${originalTitel || `N/A`}</p>
                 </div>
 
                 <div class="film-details__rating">

@@ -39,7 +39,7 @@ export default class Movies extends Observer {
     return Object.assign({}, film, {
 
       title: film.film_info.title,
-      origanalTitle: film.film_info.alternative_title,
+      originalTitel: film.film_info.alternative_title,
       poster: film.film_info.poster,
       rating: film.film_info.total_rating,
       writer: film.film_info.writers,
@@ -64,7 +64,7 @@ export default class Movies extends Observer {
       "film_info": {
         "poster": film.poster,
         "title": film.title,
-        "alternative_title": film.origanalTitle,
+        "alternative_title": film.originalTitel,
         "total_rating": film.rating,
         "director": film.director,
         "writers": film.writer,
