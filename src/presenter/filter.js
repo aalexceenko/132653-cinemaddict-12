@@ -5,9 +5,8 @@ import {FilterType, UpdateType} from "../const.js";
 
 
 export default class Filter {
-  constructor(filterContainer, filterModel, filmsModel, navigationComponent) {
+  constructor(filterModel, filmsModel, navigationComponent) {
 
-    this._filterContainer = filterContainer;
     this._filterModel = filterModel;
     this._filmsModel = filmsModel;
     this._currentFilter = null;

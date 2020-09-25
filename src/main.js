@@ -29,7 +29,7 @@ const filterModel = new FilterModel();
 
 const navigationComponent = new NavigationView();
 const filmContainerPresenter = new MovieListPresenter(siteMainElement, moviesModel, filterModel, api);
-const filterPresenter = new FilterPresenter(siteMainElement, filterModel, moviesModel, navigationComponent);
+const filterPresenter = new FilterPresenter(filterModel, moviesModel, navigationComponent);
 
 let statisticsComponent = new StatisticsFilmView(moviesModel.getFilms());
 
