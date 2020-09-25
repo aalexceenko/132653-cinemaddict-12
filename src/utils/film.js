@@ -13,12 +13,6 @@ export const getDateCommentFormat = (date) => moment(date).format(`YYYY/MM/DD HH
 
 export const getYearFromDate = (data) => moment(data).year();
 
-
-export const generateDate = (start, end) => {
-  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-};
-
-
 export const sortFilmDown = (filmA, filmB) => {
   return filmB.year.getFullYear() - filmA.year.getFullYear();
 };
