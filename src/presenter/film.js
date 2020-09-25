@@ -19,7 +19,6 @@ export default class Film {
     this._filmComments = null;
     this._api = api;
 
-    this._filmСomponent = null;
     this._filmDetailsComponent = null;
 
     this._mode = Mode.DEFAULT;
@@ -207,15 +206,15 @@ export default class Film {
   _handleEnterKeyDown(evt) {
 
     if ((evt.ctrlKey || evt.metaKey) && (evt.key === `Enter`)) {
-      const choosenEmoji = this._filmDetailsComponent.returnSelectedEmojiType();
+      const chosenEmoji = this._filmDetailsComponent.returnSelectedEmojiType();
       const messageUser = this._filmDetailsComponent.returnUserMessage();
 
-      if (choosenEmoji && messageUser) {
+      if (chosenEmoji && messageUser) {
         this._filmDetailsComponent.disableForm();
 
         const userComment = {
           id: generateId(),
-          emotion: choosenEmoji,
+          emotion: chosenEmoji,
           comment: messageUser,
           date: new Date(),
         };
