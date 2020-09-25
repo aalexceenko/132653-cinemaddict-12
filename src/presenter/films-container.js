@@ -19,7 +19,6 @@ export default class MovieList {
   constructor(filmsContainer, moviesModel, filterModel, api) {
     this._moviesModel = moviesModel;
     this._filterModel = filterModel;
-    this._filmsComments = null;
 
     this._filmsContainer = filmsContainer;
     this._renderedFilmCount = FILM_COUNT_PER_STEP;
@@ -80,16 +79,16 @@ export default class MovieList {
 
     const filterType = this._filterModel.getFilter();
     const films = this._moviesModel.getFilms();
-    const filtredFilms = filter[filterType](films);
+    const filteredFilms = filter[filterType](films);
 
     switch (this._currentSortType) {
       case SortType.DATE_DOWN:
-        return filtredFilms.sort(sortFilmDown);
+        return filteredFilms.sort(sortFilmDown);
       case SortType.RATING_DOWN:
-        return filtredFilms.sort(sortFilmRating);
+        return filteredFilms.sort(sortFilmRating);
     }
 
-    return filtredFilms;
+    return filteredFilms;
   }
 
 
@@ -253,18 +252,6 @@ export default class MovieList {
 
     render(this._filmListComponent, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
 
-  }
-
-  _renderFilmList() {
-
-    const filmCount = this._getFilms().length;
-    const films = this._getFilms().slice(0, Math.min(filmCount, FILM_COUNT_PER_STEP));
-
-    this._renderFilms(films);
-
-    if (filmCount > FILM_COUNT_PER_STEP) {
-      this._renderShowMoreButton();
-    }
   }
 
 
