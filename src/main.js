@@ -5,7 +5,7 @@ import StatisticsFilmView from "./view/stats.js";
 
 
 import {render, RenderPosition, remove} from "./utils/render.js";
-import MovieListPresenter from "./presenter/films-container.js";
+import MovieListPresenter from "./presenter/movie-list.js";
 import MoviesModel from './model/movies.js';
 import FilterModel from './model/filter.js';
 import FilterPresenter from './presenter/filter.js';
