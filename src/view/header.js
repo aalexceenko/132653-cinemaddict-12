@@ -1,9 +1,7 @@
 import AbstractView from "./abstract.js";
 import {getUserRank} from "../utils/film.js";
 
-
 const createHeaderProfileTemplate = (films) => {
-
   return (
     `<section class="header__profile profile">
       <p class="profile__rating">${getUserRank(films.length)}</p>
@@ -21,6 +19,5 @@ export default class Header extends AbstractView {
   getTemplate() {
     return createHeaderProfileTemplate(this._films);
   }
-
 }
 

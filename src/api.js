@@ -1,6 +1,5 @@
 import MoviesModel from "./model/movies.js";
 
-
 const Method = {
   GET: `GET`,
   PUT: `PUT`,
@@ -23,7 +22,6 @@ export default class Api {
     return this._load({url: `movies`})
       .then(Api.toJSON)
       .then((films) => films.map(MoviesModel.adaptToClient));
-
   }
 
   getComments(filmId) {
@@ -50,7 +48,6 @@ export default class Api {
   }
 
   updateFilm(film) {
-
     return this._load({
       url: `movies/${film.id}`,
       method: Method.PUT,

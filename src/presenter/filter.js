@@ -3,24 +3,19 @@ import {render, RenderPosition, replace, remove} from "../utils/render.js";
 import {filter} from "../utils/filter.js";
 import {FilterType, UpdateType} from "../const.js";
 
-
 export default class Filter {
   constructor(filterModel, filmsModel, navigationComponent) {
-
     this._filterModel = filterModel;
     this._filmsModel = filmsModel;
     this._currentFilter = null;
     this._navigationComponent = navigationComponent;
-
     this._filterComponent = null;
 
     this._handleModelEvent = this._handleModelEvent.bind(this);
     this._handleFilterTypeChange = this._handleFilterTypeChange.bind(this);
 
-
     this._filmsModel.addObserver(this._handleModelEvent);
     this._filterModel.addObserver(this._handleModelEvent);
-
   }
 
   init() {
@@ -32,7 +27,6 @@ export default class Filter {
     this._filterComponent = new FilterView(filters, this._currentFilter);
     this._filterComponent.setFilterTypeChangeHandler(this._handleFilterTypeChange);
 
-
     if (prevFilterComponent === null) {
       render(this._navigationComponent, this._filterComponent, RenderPosition.AFTERBEGIN);
 
@@ -40,14 +34,12 @@ export default class Filter {
     }
 
     replace(prevFilterComponent, this._filterComponent);
-
     remove(prevFilterComponent);
   }
 
   _handleModelEvent() {
     this.init();
   }
-
 
   _handleFilterTypeChange(filterType) {
     if (this._currentFilter === filterType) {
@@ -83,5 +75,4 @@ export default class Filter {
       }
     ];
   }
-
 }

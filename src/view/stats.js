@@ -7,7 +7,6 @@ import Chart from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import moment from "moment";
 
-
 const STATISTICS_FILTERS = [
   {
     title: `All time`,
@@ -94,13 +93,10 @@ const renderStatisticsChart = (statisticCtx, films) => {
       }
     }
   });
-
 };
 
 const createStatisticsFilters = (currentFilter) => {
-
   return STATISTICS_FILTERS.map(({value, title} = {}) => {
-
     return (
       `<input type="radio"
         class="statistic__filters-input visually-hidden"
@@ -113,12 +109,8 @@ const createStatisticsFilters = (currentFilter) => {
   }).join(``);
 };
 
-
 const createStatisticAllFilmsTemplate = (data) => {
-
   const {films, statisticFilter} = data;
-
-
   const watchedFilms = filter[FilterType.HISTORY](films);
   const watchedFilmsCount = watchedFilms.length;
   const totalDurationCount = watchedFilms.reduce(countFilmsDuration, 0);
@@ -126,12 +118,8 @@ const createStatisticAllFilmsTemplate = (data) => {
   const filmsTotalDurationHours = Math.floor(filmsTotalDuration.asHours());
   const statisticsFiltersTemplate = createStatisticsFilters(statisticFilter);
   const {filmsByGenre, genres} = getFilmsStatistics(films);
-
   const {genre: topGenre} = getTopGenre(filmsByGenre, genres);
-
-
   const userRank = getUserRank(films.length);
-
 
   return (
 
@@ -183,12 +171,10 @@ export default class StatisticsFilm extends SmartView {
       statisticFilter
     };
 
-
     this._periodChangeHandler = this._periodChangeHandler.bind(this);
 
     this._setCharts();
     this._setStatisticsHandler();
-
   }
 
   getTemplate() {
@@ -204,7 +190,6 @@ export default class StatisticsFilm extends SmartView {
     this.getElement().addEventListener(`change`, this._periodChangeHandler);
   }
 
-
   _setCharts() {
     if (this._filmsChart !== null) {
       this._filmsChart = null;
@@ -213,7 +198,6 @@ export default class StatisticsFilm extends SmartView {
     const {films, dateFrom, dateTo} = this._data;
     const statisticCtx = this.getElement().querySelector(`.statistic__chart`);
     this._filmsChart = renderStatisticsChart(statisticCtx, films, dateFrom, dateTo);
-
   }
 
   _periodChangeHandler(evt) {
@@ -269,6 +253,5 @@ export default class StatisticsFilm extends SmartView {
       statisticFilter: evt.target.value,
     });
   }
-
 }
 

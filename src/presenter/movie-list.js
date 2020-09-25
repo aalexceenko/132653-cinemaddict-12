@@ -12,21 +12,19 @@ import {UserAction, UpdateType} from '../const.js';
 import {render, RenderPosition, remove} from "../utils/render.js";
 import {filter} from "../utils/filter.js";
 
-
 const FILM_COUNT_PER_STEP = 5;
 
 export default class MovieList {
   constructor(filmsContainer, moviesModel, filterModel, api) {
     this._moviesModel = moviesModel;
     this._filterModel = filterModel;
-
     this._filmsContainer = filmsContainer;
+
     this._renderedFilmCount = FILM_COUNT_PER_STEP;
     this._currentSortType = SortType.DEFAULT;
     this._filmPresenter = {};
     this._isLoading = true;
     this._api = api;
-
 
     this._sortComponent = null;
     this._showMoreButtonComponent = null;
@@ -37,7 +35,6 @@ export default class MovieList {
     this._noFilmComponent = new NoFilmView();
     this._loadingComponent = new LoadingView();
 
-
     this._handleShowMoreButtonClick = this._handleShowMoreButtonClick.bind(this);
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
 
@@ -47,16 +44,13 @@ export default class MovieList {
     this._handleModelEvent = this._handleModelEvent.bind(this);
 
     this._inited = false;
-
   }
 
   init() {
-
     this._renderBoard();
 
     this._moviesModel.addObserver(this._handleModelEvent);
     this._filterModel.addObserver(this._handleModelEvent);
-
 
     this._inited = true;
   }
@@ -68,7 +62,6 @@ export default class MovieList {
     remove(this._filmListComponent);
     remove(this._filmListContainerComponent);
 
-
     this._moviesModel.removeObserver(this._handleModelEvent);
     this._filterModel.removeObserver(this._handleModelEvent);
 
@@ -76,7 +69,6 @@ export default class MovieList {
   }
 
   _getFilms() {
-
     const filterType = this._filterModel.getFilter();
     const films = this._moviesModel.getFilms();
     const filteredFilms = filter[filterType](films);
@@ -91,9 +83,7 @@ export default class MovieList {
     return filteredFilms;
   }
 
-
   _handleSortTypeChange(sortType) {
-
     if (this._currentSortType === sortType) {
       return;
     }
@@ -105,7 +95,6 @@ export default class MovieList {
   }
 
   _renderSort() {
-
     if (this._sortComponent !== null) {
       this._sortComponent = null;
     }
@@ -114,11 +103,9 @@ export default class MovieList {
     this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
 
     render(this._filmsContainer, this._sortComponent, RenderPosition.BEFOREEND);
-
   }
 
   _handleViewAction(actionType, updateType, update, callback) {
-
     switch (actionType) {
       case UserAction.UPDATE_FILM:
 
@@ -133,7 +120,6 @@ export default class MovieList {
             this._moviesModel.updateFilm(updateType, update);
           })
           .catch(() => {
-
             callback();
           });
         break;
@@ -144,7 +130,6 @@ export default class MovieList {
             this._moviesModel.updateFilm(updateType, response);
           })
           .catch(() => {
-
             callback();
           });
         break;
@@ -152,7 +137,6 @@ export default class MovieList {
   }
 
   _handleModelEvent(updateType, data) {
-
     switch (updateType) {
       case UpdateType.MINOR:
         this._filmPresenter[data.id].init(data);
@@ -170,11 +154,8 @@ export default class MovieList {
   }
 
   isInited() {
-
     return this._inited;
-
   }
-
 
   _clearBoard({resetRenderedFilmCount = false, resetSortType = false} = {}) {
     const filmCount = this._getFilms().length;
@@ -207,7 +188,6 @@ export default class MovieList {
   }
 
   _renderFilm(film) {
-
     const filmPresenter = new FilmPresenter(this._filmListContainerComponent, this._handleViewAction, this._handleModeChange, this._api);
     filmPresenter.init(film);
     this._filmPresenter[film.id] = filmPresenter;
@@ -218,7 +198,6 @@ export default class MovieList {
   }
 
   _renderNoFilms() {
-
     render(this._filmListComponent, this._noFilmComponent, RenderPosition.BEFOREEND);
   }
 
@@ -239,24 +218,18 @@ export default class MovieList {
     }
   }
 
-
   _renderShowMoreButton() {
-
     if (this._showMoreButtonComponent !== null) {
       this._showMoreButtonComponent = null;
     }
     this._showMoreButtonComponent = new ShowMoreButtonView();
 
-
     this._showMoreButtonComponent.setClickHandler(this._handleShowMoreButtonClick);
 
     render(this._filmListComponent, this._showMoreButtonComponent, RenderPosition.BEFOREEND);
-
   }
 
-
   _renderBoard() {
-
     if (this._isLoading) {
       this._renderLoading();
       return;
@@ -278,12 +251,9 @@ export default class MovieList {
 
     this._renderFilms(films.slice(0, Math.min(filmCount, this._renderedFilmCount)));
 
-
     if (filmCount > this._renderedFilmCount) {
       this._renderShowMoreButton();
     }
-
   }
-
 }
 

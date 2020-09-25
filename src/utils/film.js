@@ -1,7 +1,6 @@
 import moment from 'moment';
 
 export const getDuration = (minutes) => {
-
   const duration = moment.duration(minutes, `minutes`);
   const format = minutes > 60 ? `H[h] mm[m]` : `mm[m]`;
   return moment.utc(duration.as(`milliseconds`)).format(format).toString();
@@ -18,7 +17,6 @@ export const sortFilmDown = (filmA, filmB) => {
 };
 
 export const sortFilmRating = (filmA, filmB) => {
-
   if (filmA.rating > filmB.rating) {
     return -1;
   }

@@ -1,6 +1,5 @@
 import Observer from '../utils/observer.js';
 
-
 export default class Movies extends Observer {
   constructor() {
     super();
@@ -11,7 +10,6 @@ export default class Movies extends Observer {
     this._films = films.slice();
 
     this._notify(updateType);
-
   }
 
   getFilms() {
@@ -35,9 +33,7 @@ export default class Movies extends Observer {
   }
 
   static adaptToClient(film) {
-
     return Object.assign({}, film, {
-
       title: film.film_info.title,
       originalTitel: film.film_info.alternative_title,
       poster: film.film_info.poster,
@@ -83,9 +79,7 @@ export default class Movies extends Observer {
         "watchlist": film.isWatchlist,
         "favorite": film.isFavorites,
         "watching_date": film.watchingDate instanceof Date ? film.watchingDate.toISOString() : null,
-
       }
     });
   }
-
 }

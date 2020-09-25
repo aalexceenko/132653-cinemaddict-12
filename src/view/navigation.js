@@ -1,9 +1,6 @@
 import AbstractView from "./abstract.js";
 
-
 export const createNavigationTemplate = () => {
-
-
   return (
     `<nav class="main-navigation">
 
@@ -17,7 +14,6 @@ export default class Navigation extends AbstractView {
     super();
 
     this._menuTypeChangeHandler = this._menuTypeChangeHandler.bind(this);
-
   }
 
   getTemplate() {
@@ -33,5 +29,4 @@ export default class Navigation extends AbstractView {
     this._callback.menuClick = callback;
     this.getElement().addEventListener(`click`, this._menuTypeChangeHandler);
   }
-
 }
