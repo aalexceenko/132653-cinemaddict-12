@@ -30,8 +30,9 @@ const STATISTICS_FILTERS = [
   }
 ];
 
+const BAR_HEIGHT = 50;
+
 const renderStatisticsChart = (statisticCtx, films) => {
-  const BAR_HEIGHT = 50;
 
   const {genres, filmsByGenre} = getFilmsStatistics(films);
 
@@ -109,8 +110,8 @@ const createStatisticsFilters = (currentFilter) => {
   }).join(``);
 };
 
-const createStatisticAllFilmsTemplate = (data) => {
-  const {films, statisticFilter} = data;
+const createStatisticAllFilmsTemplate = (statisticsData) => {
+  const {films, statisticFilter} = statisticsData;
   const watchedFilms = filter[FilterType.HISTORY](films);
   const watchedFilmsCount = watchedFilms.length;
   const totalDurationCount = watchedFilms.reduce(countFilmsDuration, 0);
@@ -119,10 +120,9 @@ const createStatisticAllFilmsTemplate = (data) => {
   const statisticsFiltersTemplate = createStatisticsFilters(statisticFilter);
   const {filmsByGenre, genres} = getFilmsStatistics(films);
   const {genre: topGenre} = getTopGenre(filmsByGenre, genres);
-  const userRank = getUserRank(films.length);
+  const userRank = getUserRank(watchedFilmsCount);
 
   return (
-
     `<section class="statistic">
       <p class="statistic__rank">
         Your rank

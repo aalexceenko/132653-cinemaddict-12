@@ -44,7 +44,7 @@ export default class Api {
       }),
       headers: new Headers({"Content-Type": `application/json`})
     }).then(Api.toJSON)
-      .then((data) => MoviesModel.adaptToClient(data.movie));
+      .then((valueForFilm) => MoviesModel.adaptToClient(valueForFilm.movie));
   }
 
   updateFilm(film) {

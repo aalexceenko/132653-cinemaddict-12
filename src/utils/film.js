@@ -1,5 +1,12 @@
 import moment from 'moment';
 
+const WatchCountFilms = {
+  NONE: 0,
+  NOVICE: 1,
+  FAN: 11,
+  MOVIE_BUFF: 20,
+};
+
 export const getDuration = (minutes) => {
   const duration = moment.duration(minutes, `minutes`);
   const format = minutes > 60 ? `H[h] mm[m]` : `mm[m]`;
@@ -10,7 +17,7 @@ export const getDayMonthYearFromDate = (date) => moment(date).format(`DD MMMM YY
 
 export const getDateCommentFormat = (date) => moment(date).format(`YYYY/MM/DD HH:mm`);
 
-export const getYearFromDate = (data) => moment(data).year();
+export const getYearFromDate = (date) => moment(date).year();
 
 export const sortFilmDown = (filmA, filmB) => {
   return filmB.year.getFullYear() - filmA.year.getFullYear();
@@ -33,11 +40,11 @@ export const countFilmsDuration = (counter, film) => {
 };
 
 export const getUserRank = (count) => {
-  if (count === 0) {
+  if (count === WatchCountFilms.NONE) {
     return ``;
-  } else if (count >= 1 && count <= 10) {
+  } else if (count >= WatchCountFilms.NOVICE && count < WatchCountFilms.FAN) {
     return `novice`;
-  } else if (count >= 11 && count <= 20) {
+  } else if (count >= WatchCountFilms.FAN && count < WatchCountFilms.MOVIE_BUFF) {
     return `fan`;
   } else {
     return `movie buff`;

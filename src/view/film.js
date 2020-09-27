@@ -3,14 +3,20 @@ import {addClassName} from "../utils/common.js";
 import {CLASS_ITEM_ACTIVE} from "../const.js";
 import AbstractView from "./abstract.js";
 
+const DescriptionLimits = {
+  CUSTOM: 140,
+  MIN: 0,
+  MAX: 139,
+};
+
 const createFilmElementTemplate = (film) => {
   const {title, poster, rating, year, runtime, genres, description, comments, isWatchlist, isWatched, isFavorites} = film;
 
   const duration = getDuration(runtime);
   const yearFilm = getYearFromDate(year);
   let descriptionText = description ? description : `N/A`;
-  if (descriptionText.length > 140) {
-    descriptionText = descriptionText.slice(0, 139) + `…`;
+  if (descriptionText.length > DescriptionLimits.CUSTOM) {
+    descriptionText = descriptionText.slice(DescriptionLimits.MIN, DescriptionLimits.MAX) + `…`;
   }
 
   return (

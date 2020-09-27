@@ -136,10 +136,11 @@ export default class MovieList {
     }
   }
 
-  _handleModelEvent(updateType, data) {
+  _handleModelEvent(updateType, updatedValue) {
     switch (updateType) {
       case UpdateType.MINOR:
-        this._filmPresenter[data.id].init(data);
+        this._filmPresenter[updatedValue.id].init(updatedValue);
+        document.querySelector(`body`).classList.remove(`hide-overflow`);
         break;
       case UpdateType.MAJOR:
         this._clearBoard({resetRenderedFilmCount: true, resetSortType: true});
@@ -147,7 +148,7 @@ export default class MovieList {
         break;
       case UpdateType.INIT:
         this._isLoading = false;
-        remove(this._loadingComponent);
+        this._clearBoard({resetRenderedFilmCount: true, resetSortType: true});
         this._renderBoard();
         break;
     }
@@ -167,8 +168,11 @@ export default class MovieList {
 
     remove(this._sortComponent);
     remove(this._noFilmComponent);
-    remove(this._showMoreButtonComponent);
     remove(this._loadingComponent);
+
+    if (this._showMoreButtonComponent) {
+      remove(this._showMoreButtonComponent);
+    }
 
 
     if (resetRenderedFilmCount) {
@@ -230,11 +234,6 @@ export default class MovieList {
   }
 
   _renderBoard() {
-    if (this._isLoading) {
-      this._renderLoading();
-      return;
-    }
-
     const films = this._getFilms();
     const filmCount = films.length;
 
@@ -242,6 +241,12 @@ export default class MovieList {
 
     render(this._filmsContainer, this._filmsContainerComponent, RenderPosition.BEFOREEND);
     render(this._filmsContainerComponent, this._filmListComponent, RenderPosition.BEFOREEND);
+
+    if (this._isLoading) {
+      this._renderLoading();
+      return;
+    }
+
     render(this._filmListComponent, this._filmListContainerComponent, RenderPosition.BEFOREEND);
 
     if (filmCount === 0) {

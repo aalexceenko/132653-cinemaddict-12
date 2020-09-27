@@ -263,6 +263,7 @@ export default class PopUp extends SmartView {
     }
     evt.target.textContent = `Deleting`;
     evt.target.disabled = true;
+    document.querySelector(`body`).classList.remove(`hide-overflow`);
 
     this._callback.deleteButtonClick(evt.target.dataset.commentId, () => {
       commentElement.classList.add(`shake`);

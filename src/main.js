@@ -50,14 +50,15 @@ const handleMenuTypeChange = (menuItem) => {
 
 navigationComponent.setMenuTypeChangeHandler(handleMenuTypeChange);
 
+render(siteMainElement, navigationComponent, RenderPosition.AFTERBEGIN);
+
 filterPresenter.init();
 filmContainerPresenter.init();
 
 api.getFilms()
   .then((films) => {
     moviesModel.setFilms(UpdateType.INIT, films);
-    render(siteHeaderElement, new HeaderView(films), RenderPosition.BEFOREEND);
-    render(siteMainElement, navigationComponent, RenderPosition.AFTERBEGIN);
+    render(siteHeaderElement, new HeaderView(moviesModel), RenderPosition.BEFOREEND);
     render(footerStatisticaContainer, new StatisticUserView(films), RenderPosition.BEFOREEND);
   });
 
